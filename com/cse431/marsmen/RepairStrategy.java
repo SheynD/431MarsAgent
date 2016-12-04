@@ -42,6 +42,7 @@ public class RepairStrategy {
         	for (LogicBelief l : agent.getAllBeliefs("needRepair")){
         		goals.add(l.getParameters().get(0));
         		agent.addBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
+        		agent.broadcastBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
         		break;
         	}
         	agent.removeBeliefs("needRepair");
