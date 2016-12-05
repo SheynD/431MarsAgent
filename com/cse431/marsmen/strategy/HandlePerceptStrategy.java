@@ -5,26 +5,25 @@ import java.util.Collection;
 import com.cse431.marsmen.MarsAgent;
 
 import apltk.interpreter.data.LogicBelief;
-import eis.iilang.Action;
-import eis.iilang.ParameterList;
-import eis.iilang.Percept;
-import eis.iilang.XMLVisitor;
+import eis.iilang.*;
 import massim.javaagents.agents.MarsUtil;
 
 public class HandlePerceptStrategy implements Strategy{
 
 	public Action execute (MarsAgent agent) {
+		handlePercepts(agent);
 		return null;
 	}
 
-	public void handlePercept(Percept p) {
+	@SuppressWarnings("deprecation")
+	public void handlePercept(MarsAgent agent, Percept p) {
         /* Kind of percept */
         String perceptName = p.getName();
         /* Translate percept into belief */
-        LogicBelief belief = MarsUtil.perceptToBelief(p);
+        //LogicBelief belief = MarsUtil.perceptToBelief(p);
 
         /* Translate Percept params */
-        XMLVisitor paramTrans = new XMLVisitor();
+        PrologVisitor paramTrans = new PrologVisitor();
 
         ParameterList perceptParams = new ParameterList(p.getParameters());
 
@@ -42,17 +41,17 @@ public class HandlePerceptStrategy implements Strategy{
             case "energy":
                 break;
             case "health":
+				agent.removeBeliefs("health");
+				String health = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+				agent.addBelief(new LogicBelief("health", health));
                 break;
             case "id":
                 break;
             case "lastAction":
-				lastAction = (String)paramTrans.visit(perceptParams,"");
                 break;
             case "lastActionParam":
-				lastActionParams = (String)paramTrans.visit(perceptParams,"");
                 break;
             case "lastActionResult":
-				lastActionResult = (String)paramTrans.visit(perceptParams,"");
                 break;
             case "lastStepScore":
                 break;
@@ -65,6 +64,17 @@ public class HandlePerceptStrategy implements Strategy{
             case "money":
                 break;
             case "position":
+				agent.removeBeliefs("position", "", agent.getName());
+                String pos = (String)perceptParams.get(0).accept(paramTrans,"");
+                System.out.println("Adding position: "+pos);
+				LogicBelief newBelief = new LogicBelief("position", pos, agent.getName(), agent.getRole());
+				agent.addBelief(newBelief);
+				agent.broadcastBelief(newBelief);
+                /* Add later
+				if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
+					agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
+				}
+                */
                 break;
             case "probedVertex":
                 break;
@@ -73,6 +83,8 @@ public class HandlePerceptStrategy implements Strategy{
             case "requestAction":
                 break;
             case "role":
+				agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
+				System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
                 break;
             case "score":
                 break;
@@ -97,6 +109,19 @@ public class HandlePerceptStrategy implements Strategy{
             case "visibleEdge":
                 break;
             case "visibleEntity":
+                String vehicle_name = (String)perceptParams.get(0).accept(paramTrans,"");
+                String vertex = (String)perceptParams.get(1).accept(paramTrans,"");
+                String team = (String)perceptParams.get(2).accept(paramTrans,"");
+                String disabled = (String)perceptParams.get(3).accept(paramTrans,"");
+                /* Store enemy team, unnecessary? */
+                if (agent.getAllBeliefs("enemyTeam").isEmpty() && !team.equals(agent.getTeam())) {
+                    LogicBelief belief_enemey_team = new LogicBelief("enemyTeam", team);
+                    agent.addBelief(belief_enemey_team);
+                    agent.broadcastBelief(belief_enemey_team);
+                }
+                /* Save visible entity to belief */
+                LogicBelief ve = new LogicBelief("visibleEntity", agent.getName(),vehicle_name,vertex,team,disabled);
+                agent.addBelief(ve);
                 break;
             case "visibleVertex":
                 break;
@@ -109,16 +134,16 @@ public class HandlePerceptStrategy implements Strategy{
 	}
 
     /* Handle all percepts, using the handlePercept function */
-    private void handlePercepts(){
-		Collection<Percept> percepts = getAllPercepts();
+    private void handlePercepts(MarsAgent m){
+		Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
-		removeBeliefs("visibleEdge");
-		removeBeliefs("visibleEntity");
-		removeBeliefs("visibleVertex");
+		//m.removeBeliefs("visibleEdge");
+		//m.removeBeliefs("visibleEntity");
+		//m.removeBeliefs("visibleVertex");
 
         /* Process each percept */
 		for ( Percept p : percepts ) {
-            handlePercept(p);
+            handlePercept(m,p);
         }
 
     }

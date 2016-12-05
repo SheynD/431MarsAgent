@@ -13,3 +13,11 @@ Colonizing Mars so we can send Razavi there
 As of now, all agents recharge at every time step. See section 5 of EISMASSim description for more details
 
 The agent config files (in marsmen) are confifured to work with Heflin's tournament configuration, and plays against the dummy/simple agents. See Heflin's instructions for download of server-config. No need to utilize agent-configs, dummy10b is incorporated into our config.
+
+# BeliefBase
+- visibleAgent
+    0 - name of agent that reported it
+    1 - vehicle_name
+    2 - vertex
+    3 - team
+    4 - disabled
