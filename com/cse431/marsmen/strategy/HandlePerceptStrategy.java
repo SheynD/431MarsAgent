@@ -10,12 +10,12 @@ import eis.iilang.*;
 
 public class HandlePerceptStrategy implements Strategy{
 
-	public Action execute (MarsAgent agent) {
-		handlePercepts(agent);
-		return null;
-	}
+    public Action execute (MarsAgent agent) {
+        handlePercepts(agent);
+        return null;
+    }
 
-	public void handlePercept(MarsAgent agent, Percept p) {
+    public void handlePercept(MarsAgent agent, Percept p) {
         /* Kind of percept */
         String perceptName = p.getName();
         /* Translate percept into belief */
@@ -38,14 +38,14 @@ public class HandlePerceptStrategy implements Strategy{
             case "edges":
                 break;
             case "energy":
-				agent.removeBeliefs("energy");
+                agent.removeBeliefs("energy");
                 String energy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-				agent.addBelief(new LogicBelief("energy", energy));
+                agent.addBelief(new LogicBelief("energy", energy));
                 break;
             case "health":
-				agent.removeBeliefs("health");
-				String health = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-				agent.addBelief(new LogicBelief("health", health));
+                agent.removeBeliefs("health");
+                String health = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief("health", health));
                 break;
             case "id":
                 break;
@@ -66,16 +66,16 @@ public class HandlePerceptStrategy implements Strategy{
             case "money":
                 break;
             case "position":
-				agent.removeBeliefs("position", "", agent.getName());
+                agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
                 System.out.println("Adding position: "+pos);
-				LogicBelief newBelief = new LogicBelief("position", pos, agent.getName(), agent.getRole());
-				agent.addBelief(newBelief);
-				agent.broadcastBelief(newBelief);
+                LogicBelief newBelief = new LogicBelief("position", pos, agent.getName(), agent.getRole());
+                agent.addBelief(newBelief);
+                agent.broadcastBelief(newBelief);
                 /* Add later
-				if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
-					agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
-				}
+                if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
+                    agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
+                }
                 */
                 break;
             case "probedVertex":
@@ -85,8 +85,8 @@ public class HandlePerceptStrategy implements Strategy{
             case "requestAction":
                 break;
             case "role":
-				agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
-				System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
+                System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
                 break;
             case "score":
                 break;
@@ -132,19 +132,19 @@ public class HandlePerceptStrategy implements Strategy{
             case "zonesScore":
                 break;
         }
-		
-	}
+        
+    }
 
     /* Handle all percepts, using the handlePercept function */
     private void handlePercepts(MarsAgent m){
-		Collection<Percept> percepts = m.retrieveAllPercepts();
+        Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
-		//m.removeBeliefs("visibleEdge");
-		//m.removeBeliefs("visibleEntity");
-		//m.removeBeliefs("visibleVertex");
+        //m.removeBeliefs("visibleEdge");
+        //m.removeBeliefs("visibleEntity");
+        //m.removeBeliefs("visibleVertex");
 
         /* Process each percept */
-		for ( Percept p : percepts ) {
+        for ( Percept p : percepts ) {
             handlePercept(m,p);
         }
 

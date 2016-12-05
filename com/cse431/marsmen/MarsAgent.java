@@ -11,12 +11,12 @@ import java.util.*;
 
 public class MarsAgent extends Agent {
     /* Member variables */
-	
-	private ArrayList<Strategy> strategies;
+    
+    private ArrayList<Strategy> strategies;
 
     /* Constructor */
-	public MarsAgent(String name, String team) {
-		super(name, team);
+    public MarsAgent(String name, String team) {
+        super(name, team);
         
         // Set subsumption hierarchy
         strategies = new ArrayList<Strategy>();
@@ -30,20 +30,20 @@ public class MarsAgent extends Agent {
         strategies.add(new SurveyStrategy());
         strategies.add(new WanderStrategy());
         strategies.add(new SkipStrategy());
-	}
+    }
 
     /* What to do at this time step */
-	public Action step() {
-		
-		println("Agent : "+getName());
-		Action action = null;
-		for (Strategy strat : strategies) {
-			action = strat.execute(this);
-			if (action != null) break;
-		}
-		
-		return action;
-	}
+    public Action step() {
+        
+        println("Agent : "+getName());
+        Action action = null;
+        for (Strategy strat : strategies) {
+            action = strat.execute(this);
+            if (action != null) break;
+        }
+        
+        return action;
+    }
 
     /* Return location of current agent */
     public String getLocation(){
@@ -51,16 +51,16 @@ public class MarsAgent extends Agent {
     }
 
     /* Return integer level of energy */
-	public int getEnergy() {
-		if (getAllBeliefs("energy").isEmpty()) {
-			return -1;
-		}
-		return Integer.parseInt(getAllBeliefs("energy").getFirst().getParameters().get(0));
-	}
+    public int getEnergy() {
+        if (getAllBeliefs("energy").isEmpty()) {
+            return -1;
+        }
+        return Integer.parseInt(getAllBeliefs("energy").getFirst().getParameters().get(0));
+    }
 
     /* Override the default All Beliefs to accept multiple predicates */
-	public LinkedList<LogicBelief> getAllBeliefs(String predicate1, String... otherpredicates) {
-		LinkedList<LogicBelief> beliefs = null;
+    public LinkedList<LogicBelief> getAllBeliefs(String predicate1, String... otherpredicates) {
+        LinkedList<LogicBelief> beliefs = null;
         /* Use superclass method to get original list */
         if(!predicate1.equals(""))
             beliefs = getAllBeliefs(predicate1);
@@ -77,23 +77,23 @@ public class MarsAgent extends Agent {
                 if(!lb.getParameters().get(i).equals(thispredicate))
                     it.remove();
             }
-		}
-		return beliefs;
-	}
+        }
+        return beliefs;
+    }
     
     public String getRole(){
-		if (getAllBeliefs("role").isEmpty()) {
-			return null;
-		}
-		return getAllBeliefs("role").getFirst().getParameters().get(0);
+        if (getAllBeliefs("role").isEmpty()) {
+            return null;
+        }
+        return getAllBeliefs("role").getFirst().getParameters().get(0);
     }
 
     /* Remove a belief, overloaded to allow mutliple predicates */
-	public void removeBeliefs(String predicate, String... otherpredicates) {
+    public void removeBeliefs(String predicate, String... otherpredicates) {
 
-		LinkedList<LogicBelief> remove = new LinkedList<LogicBelief>();
+        LinkedList<LogicBelief> remove = new LinkedList<LogicBelief>();
 
-		for (LogicBelief b : beliefs) {
+        for (LogicBelief b : beliefs) {
             boolean satisfied = true;
             /* Check predicate equal or empty */
             if (b.getPredicate().equals(predicate) || predicate.equals("")){
@@ -108,17 +108,17 @@ public class MarsAgent extends Agent {
                 if(satisfied)
                     remove.add(b);
             }
-		}
+        }
 
-		beliefs.removeAll(remove);
+        beliefs.removeAll(remove);
 
-	}
+    }
 
     /* Make percepts public so strategies can get them */
-	public Collection<Percept> retrieveAllPercepts(){
-		return getAllPercepts();
-	}
+    public Collection<Percept> retrieveAllPercepts(){
+        return getAllPercepts();
+    }
 
-	@Override
-	public void handlePercept(Percept p) {}
+    @Override
+    public void handlePercept(Percept p) {}
 }
