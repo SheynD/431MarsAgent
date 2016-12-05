@@ -18,7 +18,93 @@ public class HandlePerceptStrategy implements Strategy{
 	}
 
 	public void handlePercept(Percept p) {
-  
+        /* Kind of percept */
+        String perceptName = p.getName();
+        /* Translate percept into belief */
+        LogicBelief belief = MarsUtil.perceptToBelief(p);
+
+        /* Translate Percept params */
+        XMLVisitor paramTrans = new XMLVisitor();
+
+        ParameterList perceptParams = new ParameterList(p.getParameters());
+
+
+        /* Switch statement to deal with all possible percepts */
+        switch(perceptName){
+            case "achievement":
+                break;
+            case "bye":
+                break;
+            case "deadline":
+                break;
+            case "edges":
+                break;
+            case "energy":
+                break;
+            case "health":
+                break;
+            case "id":
+                break;
+            case "lastAction":
+				lastAction = (String)paramTrans.visit(perceptParams,"");
+                break;
+            case "lastActionParam":
+				lastActionParams = (String)paramTrans.visit(perceptParams,"");
+                break;
+            case "lastActionResult":
+				lastActionResult = (String)paramTrans.visit(perceptParams,"");
+                break;
+            case "lastStepScore":
+                break;
+            case "maxEnergy":
+                break;
+            case "maxEnergyDisabled":
+                break;
+            case "maxHealth":
+                break;
+            case "money":
+                break;
+            case "position":
+                break;
+            case "probedVertex":
+                break;
+            case "ranking":
+                break;
+            case "requestAction":
+                break;
+            case "role":
+                break;
+            case "score":
+                break;
+            case "simEnd":
+                break;
+            case "simStart":
+                break;
+            case "step":
+                break;
+            case "steps":
+                break;
+            case "strength":
+                break;
+            case "surveyedEdge":
+                break;
+            case "timestamp":
+                break;
+            case "vertices":
+                break;
+            case "visRange":
+                break;
+            case "visibleEdge":
+                break;
+            case "visibleEntity":
+                break;
+            case "visibleVertex":
+                break;
+            case "zoneScore":
+                break;
+            case "zonesScore":
+                break;
+        }
 		
 	}
 
