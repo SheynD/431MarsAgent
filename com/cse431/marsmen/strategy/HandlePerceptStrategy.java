@@ -39,6 +39,9 @@ public class HandlePerceptStrategy implements Strategy{
             case "edges":
                 break;
             case "energy":
+				agent.removeBeliefs("energy");
+                String energy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+				agent.addBelief(new LogicBelief("energy", energy));
                 break;
             case "health":
 				agent.removeBeliefs("health");

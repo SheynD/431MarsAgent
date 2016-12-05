@@ -14,6 +14,7 @@ import massim.javaagents.agents.MarsUtil;
 
 public class SaboteurStrategy implements Strategy{
 
+    @Override
 	public Action execute (MarsAgent agent) {
         /* Only if the agent is a sabetuer */
         if (!agent.getRole().equals("Saboteur")) {

@@ -21,13 +21,13 @@ public class MarsAgent extends Agent {
         // Set subsumption hierarchy
         strategies = new ArrayList<Strategy>();
         strategies.add(new HandlePerceptStrategy());
-        strategies.add(new NeedRepairStrategy());
-        strategies.add(new RepairStrategy());
+        //strategies.add(new NeedRepairStrategy());
+        //strategies.add(new RepairStrategy());
         strategies.add(new RechargeStrategy());
         strategies.add(new SaboteurStrategy());
         strategies.add(new ZoningStrategy());
         strategies.add(new ExploreStrategy());
-        strategies.add(new SurveyStrategy());
+        //strategies.add(new SurveyStrategy());
         strategies.add(new WanderStrategy());
         strategies.add(new SkipStrategy());
 	}
@@ -49,6 +49,14 @@ public class MarsAgent extends Agent {
     public String getLocation(){
         return getAllBeliefs("position", "", getName()).getFirst().getParameters().get(0);
     }
+
+    /* Return integer level of energy */
+	public int getEnergy() {
+		if (getAllBeliefs("energy").isEmpty()) {
+			return -1;
+		}
+		return Integer.parseInt(getAllBeliefs("energy").getFirst().getParameters().get(0));
+	}
 
     /* Override the default All Beliefs to accept multiple predicates */
 	public LinkedList<LogicBelief> getAllBeliefs(String predicate1, String... otherpredicates) {

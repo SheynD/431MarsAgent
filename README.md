@@ -16,8 +16,12 @@ The agent config files (in marsmen) are confifured to work with Heflin's tournam
 
 # BeliefBase
 - visibleAgent
-    0 - name of agent that reported it
-    1 - vehicle_name
-    2 - vertex
-    3 - team
-    4 - disabled
+    0. name of agent that reported it
+    1. vehicle name
+    2. vertex
+    3. team
+    4. disabled or normal
+- energy
+- health
+- position
+- role
