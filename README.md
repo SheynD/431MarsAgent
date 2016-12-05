@@ -22,6 +22,18 @@ The agent config files (in marsmen) are confifured to work with Heflin's tournam
     3. team
     4. disabled or normal
 - energy
+- max energy
 - health
+- maxHealth
+- probedVertex
 - position
 - role
+- surveyedEdge
+    0. vertex1
+    1. vertex2
+    2. weight
+- visibleEdge
+    0. vertex1
+    1. vertex2
+    2. weight = "11"
+- visibleVertex
