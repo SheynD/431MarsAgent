@@ -7,9 +7,9 @@ import apltk.interpreter.data.LogicBelief;
 public class Util {
 	
 	private MarsAgent agent;
-	private ArrayList<LogicBelief> edges = new ArrayList();
-	private ArrayList<LogicBelief> nodes = new ArrayList();
-	protected ArrayList<Vertex> vertices = new ArrayList();
+	private ArrayList<LogicBelief> edges = new ArrayList<LogicBelief>();
+	private ArrayList<LogicBelief> nodes = new ArrayList<LogicBelief>();
+	protected ArrayList<Vertex> vertices = new ArrayList<Vertex>();
 	
 	public Util(MarsAgent agent) {
         this.agent = agent;

@@ -6,7 +6,7 @@ import com.cse431.marsmen.MarsAgent;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.*;
-import massim.javaagents.agents.MarsUtil;
+//import massim.javaagents.agents.MarsUtil;
 
 public class HandlePerceptStrategy implements Strategy{
 
@@ -15,7 +15,6 @@ public class HandlePerceptStrategy implements Strategy{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void handlePercept(MarsAgent agent, Percept p) {
         /* Kind of percept */
         String perceptName = p.getName();
