@@ -1,3 +1,5 @@
+package com.cse431.marsmen;
+
 import java.util.ArrayList;
 
 import apltk.interpreter.data.LogicBelief;
