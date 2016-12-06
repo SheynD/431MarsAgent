@@ -3,7 +3,7 @@ package com.cse431.marsmen.strategy;
 import com.cse431.marsmen.MarsAgent;
 //import com.cse431.marsmen.Util;
 import java.util.ArrayList;
-//import java.util.Collections;
+import java.util.Collections;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;
@@ -16,8 +16,8 @@ public class SurveyStrategy implements Strategy{
             return null;
         }
 		ArrayList <LogicBelief> edges = new ArrayList<>();
-    	for (LogicBelief l : agent.getAllBeliefs("surveyedEdge")){
-    		if (l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) ){
+		for (LogicBelief l : agent.getAllBeliefs("edge")){
+    		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
     			edges.add(l);
     		}
     	}
