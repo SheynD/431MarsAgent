@@ -11,10 +11,10 @@ public class RechargeStrategy implements Strategy{
      * */
 
     @Override
-	public Action execute (MarsAgent agent) {
-		if (agent.getEnergy() < 4) {
-			return MarsUtil.rechargeAction();
-		}
-		return null;
-	}
+    public Action execute (MarsAgent agent) {
+        if (agent.getEnergy() < 4) {
+            return MarsUtil.rechargeAction();
+        }
+        return null;
+    }
 }

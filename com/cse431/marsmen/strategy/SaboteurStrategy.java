@@ -15,7 +15,7 @@ import massim.javaagents.agents.MarsUtil;
 public class SaboteurStrategy implements Strategy{
 
     @Override
-	public Action execute (MarsAgent agent) {
+    public Action execute (MarsAgent agent) {
         /* Only if the agent is a sabetuer */
         if (!agent.getRole().equals("Saboteur")) {
             return null;
@@ -25,20 +25,20 @@ public class SaboteurStrategy implements Strategy{
             return null;
         }
         /* Loop thru all visible agents, not on our team */
-		if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
-			for (LogicBelief b : agent.getAllBeliefs("visibleEntity", agent.getName())) {
-				if (!b.getParameters().get(3).equals(agent.getTeam()) /* Different team */
-						&& b.getParameters().get(4).equals("normal")) { /* Not already disabled */
+        if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
+            for (LogicBelief b : agent.getAllBeliefs("visibleEntity", agent.getName())) {
+                if (!b.getParameters().get(3).equals(agent.getTeam()) /* Different team */
+                        && b.getParameters().get(4).equals("normal")) { /* Not already disabled */
                     String blocation = b.getParameters().get(2) ;
                     String mylocation = agent.getLocation();
                     /* On the same vertex (fix later use range)*/
                     if(mylocation.equals(blocation)){
                         return MarsUtil.attackAction(b.getParameters().get(1));
                     }
-				}
-			}
-		}
+                }
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

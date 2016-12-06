@@ -10,12 +10,12 @@ import eis.iilang.*;
 
 public class HandlePerceptStrategy implements Strategy{
 
-	public Action execute (MarsAgent agent) {
-		handlePercepts(agent);
-		return null;
-	}
+    public Action execute (MarsAgent agent) {
+        handlePercepts(agent);
+        return null;
+    }
 
-	public void handlePercept(MarsAgent agent, Percept p) {
+    public void handlePercept(MarsAgent agent, Percept p) {
         /* Kind of percept */
         String perceptName = p.getName();
         /* Translate percept into belief */
@@ -31,133 +31,135 @@ public class HandlePerceptStrategy implements Strategy{
         switch(perceptName){
             case "achievement": // Don't need
                 break;
-            case "bye":	// Don't need
-            	break;
+            case "bye": // Don't need
+                break;
             case "deadline": // Don't need
-            	break;
+                break;
             case "edges":
-            	agent.removeBeliefs("energy");
+                agent.removeBeliefs("energy");
                 break;
             case "energy":
-				agent.removeBeliefs("energy");
+                agent.removeBeliefs("energy");
                 String energy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-				agent.addBelief(new LogicBelief("energy", energy));
+                agent.addBelief(new LogicBelief("energy", energy));
                 break;
             case "health":
-				agent.removeBeliefs("health");
-				String health = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-				agent.addBelief(new LogicBelief("health", health));
+                agent.removeBeliefs("health");
+                String health = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief("health", health));
                 break;
             case "id": // Don't Need
                 break;
             case "lastAction":
-            	agent.removeBeliefs("lastAction");
-            	String lastAction = p.getParameters().get(0).accept(paramTrans,"").toString();
-            	agent.addBelief(new LogicBelief("lastAction", lastAction));
+                agent.removeBeliefs("lastAction");
+                String lastAction = p.getParameters().get(0).accept(paramTrans,"").toString();
+                agent.addBelief(new LogicBelief("lastAction", lastAction));
                 break;
             case "lastActionParam": // Don't need
                 break;
             case "lastActionResult":
-            	agent.removeBeliefs("lastActionResult");
-            	String lastActionResult = p.getParameters().get(0).accept(paramTrans,"").toString();
-            	agent.addBelief(new LogicBelief("lastActionResult", lastActionResult));
+                agent.removeBeliefs("lastActionResult");
+                String lastActionResult = p.getParameters().get(0).accept(paramTrans,"").toString();
+                agent.addBelief(new LogicBelief("lastActionResult", lastActionResult));
                 break;
             case "lastStepScore":
-            	agent.removeBeliefs("lastStepScore");
-            	String lastStepScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("lastStepScore", lastStepScore));
+                agent.removeBeliefs("lastStepScore");
+                String lastStepScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("lastStepScore", lastStepScore));
                 break;
             case "maxEnergy":
-            	agent.removeBeliefs("maxEnergy");
-            	String maxEnergy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief("maxEnergy", maxEnergy));
+                agent.removeBeliefs("maxEnergy");
+                String maxEnergy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief("maxEnergy", maxEnergy));
                 break;
             case "maxEnergyDisabled":
-            	agent.removeBeliefs("maxEnergyDisabled");
-            	LogicBelief newBeliefMED = new LogicBelief("maxEnergy", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
-            	agent.addBelief(newBeliefMED);
+                agent.removeBeliefs("maxEnergyDisabled");
+                LogicBelief newBeliefMED = new LogicBelief("maxEnergy", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
+                agent.addBelief(newBeliefMED);
                 break;
             case "maxHealth":
-            	agent.removeBeliefs("maxHealth");
-            	LogicBelief newBeliefMH = new LogicBelief("maxHealth", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
-            	agent.addBelief(newBeliefMH);
+                agent.removeBeliefs("maxHealth");
+                LogicBelief newBeliefMH = new LogicBelief("maxHealth", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
+                agent.addBelief(newBeliefMH);
                 break;
             case "money":
-            	agent.removeBeliefs("money");
-            	String money = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("money", money));
+                agent.removeBeliefs("money");
+                String money = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("money", money));
                 break;
             case "position":
-				agent.removeBeliefs("position", "", agent.getName());
+                agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
                 System.out.println("Adding position: "+pos);
-				LogicBelief newBeliefPOS = new LogicBelief("position", pos, agent.getName(), agent.getRole());
-				agent.addBelief(newBeliefPOS);
-				agent.broadcastBelief(newBeliefPOS);
+                LogicBelief posi = new LogicBelief("position", pos, agent.getName(), agent.getRole());
+                agent.addBelief(posi);
+                agent.broadcastBelief(posi);
                 /* Add later
-				if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
-					agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
-				}
-                */
+                   if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
+                   agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
+                   }
+                   */
                 break;
             case "probedVertex":
-            	LogicBelief newBeliefPV = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(newBeliefPV);
-            	agent.broadcastBelief(newBeliefPV);
+                LogicBelief prob = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(prob);
+                agent.broadcastBelief(prob);
                 break;
             case "ranking": // Don't need
                 break;  
             case "requestAction": // Don't need
                 break;
             case "role":
-				agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
-				System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
+                System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
                 break;
             case "score":
-            	agent.removeBeliefs("score");
-            	String score = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("score", score));
+                agent.removeBeliefs("score");
+                String score = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("score", score));
                 break;
             case "simEnd": // Don't need
                 break;
             case "simStart": // Don't need
                 break;
             case "step":
-            	agent.removeBeliefs("step");
-            	String step = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("step", step));
+                agent.removeBeliefs("step");
+                String step = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("step", step));
                 break;
             case "steps":
-            	agent.removeBeliefs("steps");
-            	String steps = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("steps", steps));
+                agent.removeBeliefs("steps");
+                String steps = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("steps", steps));
                 break;
             case "strength":
-            	agent.removeBeliefs("strength");
-            	String strength = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("strength", strength));
+                agent.removeBeliefs("strength");
+                String strength = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("strength", strength));
                 break;
             case "surveyedEdge":
-            	LogicBelief newBeliefSE = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), (String)p.getParameters().get(2).accept(paramTrans,""));
-            	agent.addBelief(newBeliefSE);
-            	agent.broadcastBelief(newBeliefSE);
+                LogicBelief surv = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""),
+                		(String)p.getParameters().get(1).accept(paramTrans,""),
+                		Integer.toString((Integer)p.getParameters().get(2).accept(paramTrans,"")));
+                agent.addBelief(surv);
+                agent.broadcastBelief(surv);
                 break;
             case "timestamp": // Don't need
                 break;
             case "vertices":
-            	agent.removeBeliefs("numVertices");
-            	String numVertices = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("numVertices", numVertices));
+                agent.removeBeliefs("numVertices");
+                String numVertices = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("numVertices", numVertices));
                 break;
             case "visRange":
-            	agent.removeBeliefs("visRange");
-            	String visRange = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("visRange", visRange));
+                agent.removeBeliefs("visRange");
+                String visRange = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("visRange", visRange));
                 break;
             case "visibleEdge":
-            	LogicBelief newBeliefVE = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), "11");
-            	agent.addBelief(newBeliefVE);
-            	agent.broadcastBelief(newBeliefVE);
+                LogicBelief vis = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), "11");
+                agent.addBelief(vis);
+                agent.broadcastBelief(vis);
                 break;
             case "visibleEntity":
                 String vehicle_name = (String)perceptParams.get(0).accept(paramTrans,"");
@@ -175,33 +177,33 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(ve);
                 break;
             case "visibleVertex":
-            	LogicBelief newBeliefVV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(newBeliefVV);
-            	agent.broadcastBelief(newBeliefVV);
+                LogicBelief visV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(visV);
+                agent.broadcastBelief(visV);
                 break;
             case "zoneScore":
-            	agent.removeBeliefs("zoneScore");
-            	String zoneScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("zoneScore", zoneScore));
+                agent.removeBeliefs("zoneScore");
+                String zoneScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("zoneScore", zoneScore));
                 break;
             case "zonesScore":
-            	agent.removeBeliefs("zonesScore");
-            	String zonesScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(new LogicBelief ("zonesScore", zonesScore));
+                agent.removeBeliefs("zonesScore");
+                String zonesScore = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(new LogicBelief ("zonesScore", zonesScore));
                 break;
-        }	
-	}
+        }   
+    }
 
     /* Handle all percepts, using the handlePercept function */
     private void handlePercepts(MarsAgent m){
-		Collection<Percept> percepts = m.retrieveAllPercepts();
+        Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
-		//m.removeBeliefs("visibleEdge");
-		//m.removeBeliefs("visibleEntity");
-		//m.removeBeliefs("visibleVertex");
+        //m.removeBeliefs("visibleEdge");
+        //m.removeBeliefs("visibleEntity");
+        //m.removeBeliefs("visibleVertex");
 
         /* Process each percept */
-		for ( Percept p : percepts ) {
+        for ( Percept p : percepts ) {
             handlePercept(m,p);
         }
     }
