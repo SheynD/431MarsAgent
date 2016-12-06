@@ -64,8 +64,8 @@ public class HandlePerceptStrategy implements Strategy{
             case "maxEnergyDisabled":
                 break;
             case "maxHealth":
-                LogicBelief newBelief = new LogicBelief("maxHealth", (String)p.getParameters().get(0).accept(paramTrans,""));
-                agent.addBelief(newBelief);
+                LogicBelief newBelief_ = new LogicBelief("maxHealth", (String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(newBelief_);
                 break;
             case "money":
                 break;
@@ -73,9 +73,9 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
                 System.out.println("Adding position: "+pos);
-                LogicBelief newBelief = new LogicBelief("position", pos, agent.getName(), agent.getRole());
-                agent.addBelief(newBelief);
-                agent.broadcastBelief(newBelief);
+                LogicBelief posi = new LogicBelief("position", pos, agent.getName(), agent.getRole());
+                agent.addBelief(posi);
+                agent.broadcastBelief(posi);
                 /* Add later
                    if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
                    agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
@@ -83,9 +83,9 @@ public class HandlePerceptStrategy implements Strategy{
                    */
                 break;
             case "probedVertex":
-                LogicBelief newBelief = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
-                agent.addBelief(newBelief);
-                agent.broadcastBelief(newBelief);
+                LogicBelief prob = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(prob);
+                agent.broadcastBelief(prob);
                 break;
             case "ranking":
                 break;
@@ -108,9 +108,9 @@ public class HandlePerceptStrategy implements Strategy{
             case "strength":
                 break;
             case "surveyedEdge":
-                LogicBelief newBelief = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), (String)p.getParameters().get(2).accept(paramTrans,""));
-                agent.addBelief(newBelief);
-                agent.broadcastBelief(newBelief);
+                LogicBelief surv = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), (String)p.getParameters().get(2).accept(paramTrans,""));
+                agent.addBelief(surv);
+                agent.broadcastBelief(surv);
                 break;
             case "timestamp":
                 break;
@@ -119,9 +119,9 @@ public class HandlePerceptStrategy implements Strategy{
             case "visRange":
                 break;
             case "visibleEdge":
-                LogicBelief newBelief = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), "11");
-                agent.addBelief(newBelief);
-                agent.broadcastBelief(newBelief);
+                LogicBelief vis = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), "11");
+                agent.addBelief(vis);
+                agent.broadcastBelief(vis);
                 break;
             case "visibleEntity":
                 String vehicle_name = (String)perceptParams.get(0).accept(paramTrans,"");
@@ -139,9 +139,9 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(ve);
                 break;
             case "visibleVertex":
-                LogicBelief newBelief = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
-                agent.addBelief(newBelief);
-                agent.broadcastBelief(newBelief);
+                LogicBelief visV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                agent.addBelief(visV);
+                agent.broadcastBelief(visV);
                 break;
             case "zoneScore":
                 break;
