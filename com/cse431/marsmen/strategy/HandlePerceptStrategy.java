@@ -1,7 +1,7 @@
 package com.cse431.marsmen.strategy;
 
-import java.util.Collection;
 
+import java.util.Collection;
 import com.cse431.marsmen.MarsAgent;
 
 import apltk.interpreter.data.LogicBelief;
@@ -68,14 +68,17 @@ public class HandlePerceptStrategy implements Strategy{
             	agent.addBelief(new LogicBelief ("lastStepScore", lastStepScore));
                 break;
             case "maxEnergy":
-            	LogicBelief newBeliefME = new LogicBelief("maxEnergy", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
-            	agent.addBelief(newBeliefME);
+            	agent.removeBeliefs("maxEnergy");
+            	String maxEnergy = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
+            	agent.addBelief(new LogicBelief("maxEnergy", maxEnergy));
                 break;
             case "maxEnergyDisabled":
+            	agent.removeBeliefs("maxEnergyDisabled");
             	LogicBelief newBeliefMED = new LogicBelief("maxEnergy", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
             	agent.addBelief(newBeliefMED);
                 break;
             case "maxHealth":
+            	agent.removeBeliefs("maxHealth");
             	LogicBelief newBeliefMH = new LogicBelief("maxHealth", Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,"")));
             	agent.addBelief(newBeliefMH);
                 break;
@@ -172,9 +175,9 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(ve);
                 break;
             case "visibleVertex":
-		LogicBelief newBelief = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
-            	agent.addBelief(newBelief);
-            	agent.broadcastBelief(newBelief);
+            	LogicBelief newBeliefVV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+            	agent.addBelief(newBeliefVV);
+            	agent.broadcastBelief(newBeliefVV);
                 break;
             case "zoneScore":
             	agent.removeBeliefs("zoneScore");
