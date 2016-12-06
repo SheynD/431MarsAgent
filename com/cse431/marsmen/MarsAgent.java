@@ -24,9 +24,10 @@ public class MarsAgent extends Agent {
         strategies = new ArrayList<Strategy>();
         strategies.add(new HandlePerceptStrategy());
         strategies.add(new HandleMessagesStrategy());
-        //strategies.add(new NeedRepairStrategy());
-        //strategies.add(new RepairStrategy());
         strategies.add(new RechargeStrategy());
+        strategies.add(new NeedRepairStrategy());
+        strategies.add(new RepairStrategy());
+        //strategies.add(new RechargeStrategy());
         strategies.add(new SaboteurStrategy());
         strategies.add(new ZoningStrategy());
         strategies.add(new ExploreStrategy());

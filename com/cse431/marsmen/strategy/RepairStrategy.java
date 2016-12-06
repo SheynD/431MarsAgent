@@ -40,6 +40,7 @@ public class RepairStrategy implements Strategy {
         		}
         	}
         	if (goals.size()>0){
+        		System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
         		return MarsUtil.gotoAction(getDir(goals,agent));
         	}
         }
@@ -52,6 +53,7 @@ public class RepairStrategy implements Strategy {
         	}
         	agent.removeBeliefs("needRepair");
         	if (goals.size()>0){
+        		System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
         		return MarsUtil.gotoAction(getDir(goals,agent));
         	}
         }

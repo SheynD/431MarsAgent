@@ -20,9 +20,9 @@ public class HandleMessagesStrategy implements Strategy{
 		
 		LogicBelief belief = (LogicBelief) msg.value;
 	
-		if (belief.getPredicate().equals("needsRepair")) {
+		if (belief.getPredicate().equals("needRepair")) {
 			String node = belief.getParameters().get(0).toString();
-			m.addBelief(new LogicBelief("needsRepair", node));
+			m.addBelief(new LogicBelief("needRepair", node));
 		}
 		else if (belief.getPredicate().equals("repairComing")) {
 			String node = belief.getParameters().get(0).toString();
