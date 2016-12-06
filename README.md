@@ -43,54 +43,74 @@ Percept info not stored
 // simStart
 // timestamp
 
-Total number of edges:			NumEdges (number)
+Total number of edges:  
+NumEdges (number)  
 
-Total number of vertices:		NumVertices (number)
+Total number of vertices:  
+NumVertices (number)  
 
-Agent's Role:					Role (role)
+Agent's Role:  
+Role (role)  
 
-Agent's Energy:					Energy (energy)
+Agent's Energy:  
+Energy (energy)  
 
-Agent's Max Energy:				MaxEnergy (energy)
+Agent's Max Energy:  
+MaxEnergy (energy)  
 
-Agent's Max Energy Disabled:	MaxEnergyDisabled (energy)
+Agent's Max Energy Disabled:  
+MaxEnergyDisabled (energy)  
 
-Agent's Health:					Health (health)
+Agent's Health:  
+Health (health)  
 
-Agent's Max Health:				MaxHealth (health)
+Agent's Max Health:  
+MaxHealth (health)  
 
-Agent's Strength:				Strength (strength)
+Agent's Strength:  
+Strength (strength)  
 
-Agent's Visible Range:			VisRange (distance)
+Agent's Visible Range:  
+VisRange (distance)  
 
-Total Money:					Money (money)
+Total Money:  
+Money (money)  
 
-Current Score:					Score (score)
+Current Score:  
+Score (score)  
 
-Current Step:					Step (stepNum)
+Current Step:  
+Step (stepNum)  
 
-Total Number of Steps:			TotalSteps (steps)
+Total Number of Steps:  
+TotalSteps (steps)  
 
-Last Action:					LastAction (action)
+Last Action:  
+LastAction (action)  
 
-Last Action Parameters:			LastActionParam (param)
+Last Action Parameters:  
+LastActionParam (param)  
 
-Last Action Result:				LastActionResult (result)
+Last Action Result:  
+LastActionResult (result)  
 
-Last Step Score:				LastStepScore (score)
+Last Step Score:  
+LastStepScore (score)  
 
-Zone Score:						ZoneScore (score)
+Zone Score:  
+ZoneScore (score)  
 
-ZonesScore ?:					ZonesScore (score)
+ZonesScore ?:  
+ZonesScore (score)  
 
 OLD BELIEF'S --------------------------------------------------------
 
-visibleAgent
-1. name of agent that reported it
-2. vehicle name
-3. vertex
-4. team
-5. disabled or normal
+visibleAgent  
+1. name of agent that reported it  
+2. vehicle name  
+3. vertex  
+4. team  
+5. disabled or normal  
 
 energy
 
@@ -106,15 +126,15 @@ position
 
 role
 
-surveyedEdge
-1. vertex1
-2. vertex2
-3. weight
+surveyedEdge  
+1. vertex1  
+2. vertex2  
+3. weight  
 
-visibleEdge
-1. vertex1
-2. vertex2
-3. weight = "11"
+visibleEdge  
+1. vertex1  
+2. vertex2  
+3. weight = "11"  
 
 visibleVertex
 
