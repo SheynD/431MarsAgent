@@ -1,7 +1,6 @@
 package com.cse431.marsmen.strategy;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 import com.cse431.marsmen.MarsAgent;
 
@@ -19,6 +18,18 @@ public class HandleMessagesStrategy implements Strategy{
 
 	public void handleMessage (MarsAgent m, Message msg) {
 		
+		LogicBelief belief = (LogicBelief) msg.value;
+	
+		if (belief.getPredicate().equals("needsRepair")) {
+			String node = belief.getParameters().get(0).toString();
+			m.addBelief(new LogicBelief("needsRepair", node));
+		}
+		else if (belief.getPredicate().equals("repairComing")) {
+			String node = belief.getParameters().get(0).toString();
+			String agentName = belief.getParameters().get(0).toString();
+			m.removeBeliefs("repairComing", "", agentName);
+			m.addBelief(new LogicBelief("repairComing", node, agentName));
+		}
 	}
 	
 	public void handleMessages (MarsAgent m) {
