@@ -24,7 +24,7 @@ The agent config files (in marsmen) are confifured to work with Heflin's tournam
 
 *Edge (11 designates unknown cost):		Edge (node1, node2, cost)
 
-*Agent in need of repair:				NeedsRepair (node, agentName)
+*Agent in need of repair:				needRepair (node) , repairComing(node, agentName)
 
 *Enemy Agent:							Enemy (node)
 
