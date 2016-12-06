@@ -30,6 +30,21 @@ public class HandleMessagesStrategy implements Strategy{
 			m.removeBeliefs("repairComing", "", agentName);
 			m.addBelief(new LogicBelief("repairComing", node, agentName));
 		}
+		else if (belief.getPredicate().equals("edge")) {
+			String node1 = belief.getParameters().get(0).toString();
+			String node2 = belief.getParameters().get(1).toString();
+			String weight = belief.getParameters().get(2).toString();
+			// System.err.println("ADD EDGE " + node1 + "__" + node2 + "__" + weight);
+			m.removeBeliefs("edge", node1, node2);
+			m.addBelief(new LogicBelief("edge", node1, node2, weight));
+		}
+		else if (belief.getPredicate().equals("node")) {
+			String node = belief.getParameters().get(0).toString();
+			String value = belief.getParameters().get(1).toString();
+			// System.err.println("ADD NODE " + node + "__" + value);
+			m.removeBeliefs("node", node, "");
+			m.addBelief(new LogicBelief("node", node, value));
+		}
 	}
 	
 	public void handleMessages (MarsAgent m) {
