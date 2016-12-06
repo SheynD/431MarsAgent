@@ -42,68 +42,66 @@ Percept info not stored
 // simEnd
 // simStart
 // timestamp
+// lastActionParams
 
 Total number of edges:  
-NumEdges (number)  
+numEdges (number)  
 
 Total number of vertices:  
-NumVertices (number)  
+numVertices (number)  
 
 Agent's Role:  
-Role (role)  
+role (role)  
 
 Agent's Energy:  
-Energy (energy)  
+energy (energy)  
 
 Agent's Max Energy:  
-MaxEnergy (energy)  
+maxEnergy (energy)  
 
 Agent's Max Energy Disabled:  
-MaxEnergyDisabled (energy)  
+maxEnergyDisabled (energy)  
 
 Agent's Health:  
-Health (health)  
+health (health)  
 
 Agent's Max Health:  
-MaxHealth (health)  
+maxHealth (health)  
 
 Agent's Strength:  
-Strength (strength)  
+strength (strength)  
 
 Agent's Visible Range:  
-VisRange (distance)  
+visRange (distance)  
 
 Total Money:  
-Money (money)  
+money (money)  
 
 Current Score:  
-Score (score)  
+score (score)  
 
 Current Step:  
-Step (stepNum)  
+step (stepNum)  
 
 Total Number of Steps:  
-TotalSteps (steps)  
+totalSteps (steps)  
 
 Last Action:  
-LastAction (action)  
-
-Last Action Parameters:  
-LastActionParam (param)  
+lastAction (action)  
 
 Last Action Result:  
-LastActionResult (result)  
+lastActionResult (result)  
 
 Last Step Score:  
-LastStepScore (score)  
+lastStepScore (score)  
 
 Zone Score:  
-ZoneScore (score)  
+zoneScore (score)  
 
 ZonesScore ?:  
-ZonesScore (score)  
+zonesScore (score)  
 
-OLD BELIEF'S --------------------------------------------------------
+### OLD BELIEF'S --------------------------------------------------------
 
 visibleAgent  
 1. name of agent that reported it  
