@@ -22,8 +22,8 @@ public class ExploreStrategy implements Strategy{
         	//goto a different vertex
         	Util u = new Util(agent);
         	ArrayList <LogicBelief> edges = new ArrayList<>();
-        	for (LogicBelief l : agent.getAllBeliefs("surveyedEdge")){
-        		if (l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) ){
+        	for (LogicBelief l : agent.getAllBeliefs("edge")){
+        		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
         			edges.add(l);
         		}
         	}
