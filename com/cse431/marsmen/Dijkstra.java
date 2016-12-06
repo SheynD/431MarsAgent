@@ -9,7 +9,6 @@ class Vertex implements Comparable<Vertex> {
 	public ArrayList<Edge> adjacencies;
 	public double minDistance = Double.POSITIVE_INFINITY;
 	public Vertex previous;
-	public int wert;
 
 	public Vertex(String argName) {
 		name = argName;
@@ -36,7 +35,7 @@ class Edge {
 
 public class Dijkstra {
 
-	public static void computePaths(Vertex source, ArrayList<String> ziel) {
+	public static void computePaths(Vertex source, ArrayList<String> goal) {
 		source.minDistance = 0.;
 		PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
 		vertexQueue.add(source);
@@ -55,7 +54,7 @@ public class Dijkstra {
 					vertexQueue.add(v);
 				}
 			}
-			if (ziel.contains(u.name)) {
+			if (goal.contains(u.name)) {
 				vertexQueue.clear();
 				break;
 			}
@@ -71,17 +70,17 @@ public class Dijkstra {
 		return path;
 	}
 
-	public ArrayList<String> getDirection(ArrayList<Vertex> vertices, ArrayList<String> ziel, String start) {
+	public ArrayList<String> getDirection(ArrayList<Vertex> vertices, ArrayList<String> goal, String start) {
 		int i = -1;
 		for (Vertex v : vertices) {
 			if (v.name.equals(start)) {
 				i = vertices.indexOf(v);
 			}
 		}
-		computePaths(vertices.get(i), ziel);
+		computePaths(vertices.get(i), goal);
 		double dist = 10000;
 		Vertex ausgabe = new Vertex("test");
-		for (String z : ziel) {
+		for (String z : goal) {
 			for (Vertex v : vertices) {
 				if (v.name.equals(z) && v.minDistance < dist) {
 					dist = v.minDistance;

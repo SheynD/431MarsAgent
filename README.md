@@ -101,7 +101,7 @@ zoneScore (score)
 ZonesScore ?:  
 zonesScore (score)  
 
-### OLD BELIEF'S --------------------------------------------------------
+### OLD BELIEFS --------------------------------------------------------
 
 visibleAgent  
 1. name of agent that reported it  
