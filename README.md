@@ -14,26 +14,126 @@ As of now, all agents recharge at every time step. See section 5 of EISMASSim de
 
 The agent config files (in marsmen) are confifured to work with Heflin's tournament configuration, and plays against the dummy/simple agents. See Heflin's instructions for download of server-config. No need to utilize agent-configs, dummy10b is incorporated into our config.
 
-# BeliefBase
-- visibleAgent
-    0. name of agent that reported it
-    1. vehicle name
-    2. vertex
-    3. team
-    4. disabled or normal
-- energy
-- max energy
-- health
-- maxHealth
-- probedVertex
-- position
-- role
-- surveyedEdge
-    0. vertex1
-    1. vertex2
-    2. weight
-- visibleEdge
-    0. vertex1
-    1. vertex2
-    2. weight = "11"
-- visibleVertex
+# Beliefs
+
+### Broadcasted -----------------------------------------------------
+
+*Position of Agent:						Position (node, agentName, role)
+
+*Node/Vertex (-1 designates unknown):	Node (name, value)
+
+*Edge (11 designates unknown cost):		Edge (node1, node2, cost)
+
+*Agent in need of repair:				NeedsRepair (node, agentName)
+
+*Enemy Agent:							Enemy (node)
+
+*Visible Agent (opponent or teammate):	VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
+
+### Internals (derived from percepts) -----------------------------------
+
+Percept info not stored
+// achievement
+// bye
+// deadline
+// id
+// ranking
+// requestAction
+// simEnd
+// simStart
+// timestamp
+// lastActionParams
+
+Total number of edges:  
+numEdges (number)  
+
+Total number of vertices:  
+numVertices (number)  
+
+Agent's Role:  
+role (role)  
+
+Agent's Energy:  
+energy (energy)  
+
+Agent's Max Energy:  
+maxEnergy (energy)  
+
+Agent's Max Energy Disabled:  
+maxEnergyDisabled (energy)  
+
+Agent's Health:  
+health (health)  
+
+Agent's Max Health:  
+maxHealth (health)  
+
+Agent's Strength:  
+strength (strength)  
+
+Agent's Visible Range:  
+visRange (distance)  
+
+Total Money:  
+money (money)  
+
+Current Score:  
+score (score)  
+
+Current Step:  
+step (stepNum)  
+
+Total Number of Steps:  
+totalSteps (steps)  
+
+Last Action:  
+lastAction (action)  
+
+Last Action Result:  
+lastActionResult (result)  
+
+Last Step Score:  
+lastStepScore (score)  
+
+Zone Score:  
+zoneScore (score)  
+
+ZonesScore ?:  
+zonesScore (score)  
+
+### OLD BELIEF'S --------------------------------------------------------
+
+visibleAgent  
+1. name of agent that reported it  
+2. vehicle name  
+3. vertex  
+4. team  
+5. disabled or normal  
+
+energy
+
+max energy
+
+health
+
+maxHealth
+
+probedVertex
+
+position
+
+role
+
+surveyedEdge  
+1. vertex1  
+2. vertex2  
+3. weight  
+
+visibleEdge  
+1. vertex1  
+2. vertex2  
+3. weight = "11"  
+
+visibleVertex
+
+

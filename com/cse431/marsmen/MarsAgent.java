@@ -4,6 +4,8 @@ import eis.iilang.*;
 import massim.javaagents.Agent;
 //import massim.javaagents.agents.MarsUtil;
 import apltk.interpreter.data.LogicBelief;
+import apltk.interpreter.data.Message;
+
 //import apltk.interpreter.data.LogicGoal;
 import com.cse431.marsmen.strategy.*;
 
@@ -21,8 +23,9 @@ public class MarsAgent extends Agent {
         // Set subsumption hierarchy
         strategies = new ArrayList<Strategy>();
         strategies.add(new HandlePerceptStrategy());
-        strategies.add(new NeedRepairStrategy());
-        strategies.add(new RepairStrategy());
+        strategies.add(new HandleMessagesStrategy());
+        //strategies.add(new NeedRepairStrategy());
+        //strategies.add(new RepairStrategy());
         strategies.add(new RechargeStrategy());
         strategies.add(new SaboteurStrategy());
         strategies.add(new ZoningStrategy());
@@ -118,6 +121,12 @@ public class MarsAgent extends Agent {
     public Collection<Percept> retrieveAllPercepts(){
         return getAllPercepts();
     }
+    
+    /* Make messages public so strategies can get them */
+    public Collection<Message> retrieveAllMessages() {
+        return getMessages();
+    }
+    
 
     @Override
     public void handlePercept(Percept p) {}
