@@ -3,7 +3,7 @@ package com.cse431.marsmen.strategy;
 import com.cse431.marsmen.MarsAgent;
 //import com.cse431.marsmen.Util;
 import java.util.ArrayList;
-import java.util.Collections;
+//import java.util.Collections;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;

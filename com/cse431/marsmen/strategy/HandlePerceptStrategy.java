@@ -138,7 +138,9 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(new LogicBelief ("strength", strength));
                 break;
             case "surveyedEdge":
-                LogicBelief surv = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), (String)p.getParameters().get(2).accept(paramTrans,""));
+                LogicBelief surv = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""),
+                		(String)p.getParameters().get(1).accept(paramTrans,""),
+                		Integer.toString((Integer)p.getParameters().get(2).accept(paramTrans,"")));
                 agent.addBelief(surv);
                 agent.broadcastBelief(surv);
                 break;
