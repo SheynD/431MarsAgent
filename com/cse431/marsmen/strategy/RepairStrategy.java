@@ -22,12 +22,13 @@ public class RepairStrategy implements Strategy {
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
         	
         	for (LogicBelief l : agent.getAllBeliefs("repairComing")){
+        		System.out.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1));
         		if (l.getParameters().get(1).equals(agent.getName())){
         			if (agent.getAllBeliefs("position").getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
         				agent.removeBeliefs("repairComing");
         				String entity = "";
-        				for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity")){
-        					if (l2.getParameters().get(0).equals(l.getParameters().get(0))){
+        				for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
+        					if (l2.getParameters().get(2).equals(l.getParameters().get(0)) && agent.getTeam().equals(l2.getParameters().get(3)) && l2.getParameters().get(4).equals("disabled")){
         						entity = l2.getParameters().get(1);
         					}
         				}
@@ -65,10 +66,16 @@ public class RepairStrategy implements Strategy {
 	private String getDir(ArrayList <String> goals, MarsAgent agent){
 		Util u = new Util(agent);
 		ArrayList<String> path = u.getDirection(agent.getAllBeliefs("position").getFirst().getParameters().get(0), goals);
+		for (String p : path){
+			System.out.println(p);
+		}
+		if (path.size() > 0 && path.get(0).equals(agent.getAllBeliefs("position").getFirst().getParameters().get(0))) {
+			path.remove(0);
+		}
 		if (path.size() > 0 && !path.get(0).equals("test") && u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0)).contains(path.get(0))) {
             return path.get(0);
         }
-		else return "";
+		else return u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0)).get(0);
 	}
 	
 }
