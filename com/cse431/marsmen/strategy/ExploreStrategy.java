@@ -18,12 +18,12 @@ public class ExploreStrategy implements Strategy{
         if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0) {
             return null;
         }
-        if (agent.containsBelief(new LogicBelief("probedVertex", agent.getAllBeliefs("position").getFirst().getParameters().get(0)))){
+        if (agent.containsBelief(new LogicBelief("probedVertex", agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)))){
         	//goto a different vertex
         	Util u = new Util(agent);
         	ArrayList <LogicBelief> edges = new ArrayList<>();
         	for (LogicBelief l : agent.getAllBeliefs("edge")){
-        		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
+        		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
         			edges.add(l);
         		}
         	}
@@ -31,7 +31,7 @@ public class ExploreStrategy implements Strategy{
         		return MarsUtil.surveyAction();
         	}
         	else{
-        		ArrayList <String> verticies = u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0));
+        		ArrayList <String> verticies = u.getNeighborVertexes(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0));
         		Collections.shuffle(verticies);
         		for (String v : verticies){
         			if (agent.containsBelief(new LogicBelief("probedVertex", v))){

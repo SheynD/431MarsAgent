@@ -17,7 +17,7 @@ public class SurveyStrategy implements Strategy{
         }
 		ArrayList <LogicBelief> edges = new ArrayList<>();
 		for (LogicBelief l : agent.getAllBeliefs("edge")){
-    		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position").getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
+    		if ((l.getParameters().get(0).equals( agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)) || l.getParameters().get(1).equals( agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0))) && !l.getParameters().get(2).equals("11")){
     			edges.add(l);
     		}
     	}

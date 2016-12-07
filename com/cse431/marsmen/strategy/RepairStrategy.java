@@ -24,7 +24,7 @@ public class RepairStrategy implements Strategy {
         	for (LogicBelief l : agent.getAllBeliefs("repairComing")){
         		System.out.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1));
         		if (l.getParameters().get(1).equals(agent.getName())){
-        			if (agent.getAllBeliefs("position").getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
+        			if (agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
         				agent.removeBeliefs("repairComing");
         				String entity = "";
         				for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
@@ -65,17 +65,17 @@ public class RepairStrategy implements Strategy {
 	
 	private String getDir(ArrayList <String> goals, MarsAgent agent){
 		Util u = new Util(agent);
-		ArrayList<String> path = u.getDirection(agent.getAllBeliefs("position").getFirst().getParameters().get(0), goals);
+		ArrayList<String> path = u.getDirection(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0), goals);
 		for (String p : path){
 			System.out.println(p);
 		}
-		if (path.size() > 0 && path.get(0).equals(agent.getAllBeliefs("position").getFirst().getParameters().get(0))) {
+		if (path.size() > 0 && path.get(0).equals(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0))) {
 			path.remove(0);
 		}
-		if (path.size() > 0 && !path.get(0).equals("test") && u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0)).contains(path.get(0))) {
+		if (path.size() > 0 && !path.get(0).equals("test") && u.getNeighborVertexes(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)).contains(path.get(0))) {
             return path.get(0);
         }
-		else return u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0)).get(0);
+		else return u.getNeighborVertexes(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)).get(0);
 	}
 	
 }
