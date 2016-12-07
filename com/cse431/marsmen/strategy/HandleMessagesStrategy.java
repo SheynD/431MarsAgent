@@ -20,14 +20,14 @@ public class HandleMessagesStrategy implements Strategy{
 		
 		LogicBelief belief = (LogicBelief) msg.value;
 	
-		if (belief.getPredicate().equals("needsRepair")) {
+		if (belief.getPredicate().equals("needRepair")) {
 			String node = belief.getParameters().get(0).toString();
-			m.addBelief(new LogicBelief("needsRepair", node));
+			m.addBelief(new LogicBelief("needRepair", node));
 		}
 		else if (belief.getPredicate().equals("repairComing")) {
 			String node = belief.getParameters().get(0).toString();
 			String agentName = belief.getParameters().get(1).toString();
-			m.removeBeliefs("repairComing", "", agentName);
+			//m.removeBeliefs("repairComing", "", agentName);
 			m.addBelief(new LogicBelief("repairComing", node, agentName));
 		}
 		else if (belief.getPredicate().equals("edge")) {
@@ -35,15 +35,16 @@ public class HandleMessagesStrategy implements Strategy{
 			String node2 = belief.getParameters().get(1).toString();
 			String weight = belief.getParameters().get(2).toString();
 			// System.err.println("ADD EDGE " + node1 + "__" + node2 + "__" + weight);
-			m.removeBeliefs("edge", node1, node2);
+			//m.removeBeliefs("edge", node1, node2);
 			m.addBelief(new LogicBelief("edge", node1, node2, weight));
 		}
-		else if (belief.getPredicate().equals("node")) {
+		else if (belief.getPredicate().equals("vertex")) {
 			String node = belief.getParameters().get(0).toString();
-			String value = belief.getParameters().get(1).toString();
+			//String value = belief.getParameters().get(1).toString();
 			// System.err.println("ADD NODE " + node + "__" + value);
-			m.removeBeliefs("node", node, "");
-			m.addBelief(new LogicBelief("node", node, value));
+			//m.removeBeliefs("node", node, "");
+			//m.addBelief(new LogicBelief("node", node, value));
+			m.addBelief(new LogicBelief("vertex", node));
 		}
 		else if (belief.getPredicate().equals("position")) {
 			// Position (node, agentName, role)
