@@ -45,6 +45,24 @@ public class HandleMessagesStrategy implements Strategy{
 			m.removeBeliefs("node", node, "");
 			m.addBelief(new LogicBelief("node", node, value));
 		}
+		else if (belief.getPredicate().equals("position")) {
+			// Position (node, agentName, role)
+			String node = belief.getParameters().get(0).toString();
+			String agentName = belief.getParameters().get(1).toString();
+			String role = belief.getParameters().get(2).toString();			
+			m.removeBeliefs("position", "", agentName, "");
+			m.addBelief(new LogicBelief("position", node, agentName, role));
+		}
+		else if (belief.getPredicate().equals("visibleAgent")) {
+			// VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
+			String reporterName = belief.getParameters().get(0).toString();
+			String vehicleName = belief.getParameters().get(1).toString();
+			String vertex = belief.getParameters().get(2).toString();
+			String team = belief.getParameters().get(3).toString();
+			String isDisabled = belief.getParameters().get(4).toString();
+			m.removeBeliefs("visibleAgent", "", vehicleName, "", "", "");
+			m.addBelief(new LogicBelief("visibleAgent", reporterName, vehicleName, vertex, team, isDisabled));
+		}
 	}
 	
 	public void handleMessages (MarsAgent m) {

@@ -25,8 +25,7 @@ public class HandlePerceptStrategy implements Strategy{
         PrologVisitor paramTrans = new PrologVisitor();
 
         ParameterList perceptParams = new ParameterList(p.getParameters());
-
-
+ 
         /* Switch statement to deal with all possible percepts */
         switch(perceptName){
             case "achievement": // Don't need
@@ -87,10 +86,11 @@ public class HandlePerceptStrategy implements Strategy{
                 String money = Integer.toString((Integer)p.getParameters().get(0).accept(paramTrans,""));
                 agent.addBelief(new LogicBelief ("money", money));
                 break;
-            case "position":
-                agent.removeBeliefs("position", "", agent.getName());
+            case "position": 
+                // Position: (node, agentName, role)
+            	agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
-                System.out.println("Adding position: "+pos);
+                // System.err.println("Adding position: "+pos);
                 LogicBelief posi = new LogicBelief("position", pos, agent.getName(), agent.getRole());
                 agent.addBelief(posi);
                 agent.broadcastBelief(posi);
