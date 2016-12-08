@@ -26,7 +26,7 @@ public class RepairStrategy implements Strategy {
             /* For every repair that is incoming */
             for (LogicBelief l : agent.getAllBeliefs("repairComing")){
                 System.out.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1));
-                /* If this was me that said I am coming to repair */
+                /* If it was me that said I am coming to repair */
                 if (l.getParameters().get(1).equals(agent.getName())){
                     /* And we are at the same vertex */
                     if (agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
@@ -53,7 +53,7 @@ public class RepairStrategy implements Strategy {
             }
             /* We have an agent to repair */
             if (goals.size()>0){
-                System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
+                System.err.println("\n\n\nGoing to repair, next step:" + getDir(goals,agent) + "\n\n\n");
                 return MarsUtil.gotoAction(getDir(goals,agent));
             }
         }
