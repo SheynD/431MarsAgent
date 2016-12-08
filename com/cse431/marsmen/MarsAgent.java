@@ -93,7 +93,7 @@ public class MarsAgent extends Agent {
         return getAllBeliefs("role").getFirst().getParameters().get(0);
     }
 
-    /* Remove a belief, overloaded to allow mutliple predicates */
+    /* Remove a belief, overloaded to allow multiple predicates */
     public void removeBeliefs(String predicate, String... otherpredicates) {
 
         LinkedList<LogicBelief> remove = new LinkedList<LogicBelief>();

@@ -16,6 +16,14 @@ public class RechargeStrategy implements Strategy{
         if (agent.getEnergy() < 4) {
             return MarsUtil.rechargeAction();
         }
+        /* If the last action failed (not buy) because we didn't have enough energy (Untested)*/
+        if( !agent.getAllBeliefs("lastAction").getFirst().getParameters().get(0).equals("buy") && 
+        		agent.getAllBeliefs("lastActionResult").getFirst().getParameters().get(0).equals("failed_resources")){
+        	System.out.println("Recharging because our last action "+
+        		agent.getAllBeliefs("lastActionResult").getFirst().getParameters().get(0)
+        		+" failed");
+        	return MarsUtil.rechargeAction();
+        }
         return null;
     }
 }
