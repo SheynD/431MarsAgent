@@ -4,87 +4,109 @@ import java.util.ArrayList;
 
 import apltk.interpreter.data.LogicBelief;
 
+/* Note, I removed consideration of maxEnergy */
+
 public class Util {
-	
-	private MarsAgent agent;
-	private ArrayList<LogicBelief> edges = new ArrayList<LogicBelief>();
-	private ArrayList<LogicBelief> nodes = new ArrayList<LogicBelief>();
-	protected ArrayList<Vertex> vertices = new ArrayList<Vertex>();
-	
-	public Util(MarsAgent agent) {
+
+    private static final int DEFAULT_WEIGHT = 11;
+    private MarsAgent agent;
+    private ArrayList<LogicBelief> edges;
+    private ArrayList<LogicBelief> nodes;
+    protected ArrayList<Vertex> vertices;
+
+    /* Initialze array lists */
+    public Util(MarsAgent agent) {
         this.agent = agent;
-    }
-	
-	public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
-        Dijkstra dija = new Dijkstra();
-        this.updateVertices();
-        return dija.getDirection(this.vertices, goal, start);
+        edges = new ArrayList<LogicBelief>();
+        nodes = new ArrayList<LogicBelief>();
+        vertices = new ArrayList<Vertex>();
     }
 
+    /* Get an ArrayList of nodes to traverse (the path) */
+    public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
+        Dijkstra dija = new Dijkstra();
+        updateVertices();
+        System.out.println("We have "+edges.size()+" edges and "+nodes.size()+" nodes ("+vertices.size()+" vertices");
+        return dija.getDirection(vertices, goal, start);
+    }
+
+    /* Update internal knowledge base */
     private void updateVertices() {
-        for (LogicBelief b2 : this.agent.getAllBeliefs("vertex")) {
-            LogicBelief fu = new LogicBelief("vertex", new String[]{(String)b2.getParameters().get(0)});
-            if (this.nodes.contains((Object)fu)) continue;
-            this.nodes.add(fu);
-            this.vertices.add(new Vertex((String)b2.getParameters().get(0)));
-            this.vertices.get((int)(this.vertices.size() - 1)).adjacencies = new ArrayList<>();
+        /* For all vertices in beliefs */
+        for (LogicBelief b2 : agent.getAllBeliefs("vertex")) {
+            String thisVertex = (String)b2.getParameters().get(0);
+            LogicBelief fu = new LogicBelief("vertex",thisVertex);
+            if (nodes.contains((Object)fu)) 
+                continue;
+            /* Add to our list of known nodes */
+            nodes.add(fu);
+            /* Add to list of vertices */
+            vertices.add(new Vertex(thisVertex));
         }
-        for (LogicBelief b2 : this.agent.getAllBeliefs("edge")) {
-            if (this.edges.contains((Object)new LogicBelief("edge", new String[]{(String)b2.getParameters().get(0), (String)b2.getParameters().get(1), "11"})) && !((String)b2.getParameters().get(2)).equals("11")) {
-                this.edges.set(this.edges.indexOf((Object)new LogicBelief(b2.getPredicate(), new String[]{(String)b2.getParameters().get(0), (String)b2.getParameters().get(1), "11"})), b2);
-                for (Vertex v : this.vertices) {
-                    Vertex watt;
-                    double i;
-                    if (v.name.equals(b2.getParameters().get(0))) {
-                        for (Edge e : v.adjacencies) {
-                            if (!e.target.name.equals(b2.getParameters().get(1))) continue;
-                            watt = e.target;
-                            i = Integer.parseInt((String)b2.getParameters().get(2));
-                            i *= 2.0;
-                            i /= (double)Integer.parseInt((String)this.agent.getAllBeliefs("maxEnergy").get(0).getParameters().get(0));
-                            v.adjacencies.set(v.adjacencies.indexOf(e), new Edge(watt, i += 1.0));
+
+        /* For every edge */
+        for (LogicBelief b2 : agent.getAllBeliefs("edge")) {
+            String vertex1 = b2.getParameters().get(0);
+            String vertex2 = b2.getParameters().get(1);
+            String weightStr = b2.getParameters().get(2);
+            int weight = Integer.parseInt(weightStr);
+
+            /* If only the default weight is known but we know the actual weight */
+            if (edges.contains(new LogicBelief("edge", vertex1, vertex2,Integer.toString(DEFAULT_WEIGHT))) && weight!=DEFAULT_WEIGHT) {
+                /* Update weight */
+                int idx = edges.indexOf(new LogicBelief(b2.getPredicate(), vertex1,vertex2,Integer.toString(DEFAULT_WEIGHT)));
+                edges.set(idx, b2);
+                /* For every known vertex */
+                for (Vertex v : vertices) {
+                    /* Match vertex 1 */
+                    if (v.name.equals(vertex1)) {
+                        /* Find the correct edge from v1 to v2 and update its weight */
+                        for (int i=0; i<v.adjacencies.size(); i++){
+                        	Edge e = v.adjacencies.get(i);
+                            if (e.target.name.equals(vertex2)) 
+                                v.adjacencies.set(i, new Edge(e.target,weight));
                         }
                     }
-                    if (!v.name.equals(b2.getParameters().get(1))) continue;
-                    for (Edge e : v.adjacencies) {
-                        if (!e.target.name.equals(b2.getParameters().get(0))) continue;
-                        watt = e.target;
-                        i = Integer.parseInt((String)b2.getParameters().get(2));
-                        i *= 2.0;
-                        i /= (double)Integer.parseInt((String)this.agent.getAllBeliefs("maxEnergy").get(0).getParameters().get(0));
-                        v.adjacencies.set(v.adjacencies.indexOf(e), new Edge(watt, i += 1.0));
+                    /* Match vertex 2 */
+                    if (v.name.equals(vertex2)){
+                        /* Find the correct edge from v2 to v1 and update its weight */
+                    	for (int i=0; i<v.adjacencies.size(); i++){
+                        	Edge e = v.adjacencies.get(i);
+                            if (e.target.name.equals(vertex1)) 
+                                v.adjacencies.set(i, new Edge(e.target,weight));
+                        }
                     }
                 }
             }
-            if (this.edges.contains((Object)b2)) continue;
-            this.edges.add(b2);
-            Vertex a = new Vertex("");
-            Vertex c = new Vertex("");
-            for (Vertex v : this.vertices) {
-                if (v.name.equals(b2.getParameters().get(0))) {
-                    a = v;
+
+            /* We should add it to our edges */
+            if (!edges.contains(b2)) {
+                edges.add(b2);
+                Vertex v1 = null;
+                Vertex v2 = null;
+                for (Vertex v : vertices) {
+                    if (v.name.equals(vertex1))
+                        v1 = v;
+                    if (v.name.equals(vertex2))
+                        v2 = v;
                 }
-                if (!v.name.equals(b2.getParameters().get(1))) continue;
-                c = v;
+                v1.adjacencies.add(new Edge(v2,weight));
+                v2.adjacencies.add(new Edge(v1,weight));
             }
-            double i = Integer.parseInt((String)b2.getParameters().get(2));
-            i *= 2.0;
-            i /= (double)Integer.parseInt((String)this.agent.getAllBeliefs("maxEnergy").get(0).getParameters().get(0));
-            this.vertices.get((int)this.vertices.indexOf((Object)a)).adjacencies.add(new Edge(c, i += 1.0));
-            this.vertices.get((int)this.vertices.indexOf((Object)c)).adjacencies.add(new Edge(a, i));
         }
     }
-    
+
+    /* Return array of neighbor vertices */
     public ArrayList<String> getNeighborVertexes(String start) {
         ArrayList<String> vertexes = new ArrayList<String>();
         String position = start;
-        for (LogicBelief p : this.agent.getAllBeliefs("edge")) {
-            if (((String)p.getParameters().get(0)).toString().equals(position)) {
-                vertexes.add(((String)p.getParameters().get(1)).toString());
-                continue;
-            }
-            if (!((String)p.getParameters().get(1)).toString().equals(position)) continue;
-            vertexes.add(((String)p.getParameters().get(0)).toString());
+        for (LogicBelief p : agent.getAllBeliefs("edge")) {
+            String vertex1 = p.getParameters().get(0);
+            String vertex2 = p.getParameters().get(1);
+            if (vertex1.equals(position))
+                vertexes.add(vertex2);
+            if (vertex2.equals(position)) 
+                vertexes.add(vertex1);
         }
         return vertexes;
     }

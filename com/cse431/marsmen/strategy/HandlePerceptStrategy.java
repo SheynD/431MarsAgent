@@ -88,7 +88,7 @@ public class HandlePerceptStrategy implements Strategy{
                 break;
             case "position": 
                 // Position: (node, agentName, role)
-            	agent.removeBeliefs("position", "", agent.getName());
+                agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
                 // System.err.println("Adding position: "+pos);
                 LogicBelief posi = new LogicBelief("position", pos, agent.getName(), agent.getRole());
@@ -138,9 +138,10 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(new LogicBelief ("strength", strength));
                 break;
             case "surveyedEdge":
-                LogicBelief surv = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""),
-                		(String)p.getParameters().get(1).accept(paramTrans,""),
-                		Integer.toString((Integer)p.getParameters().get(2).accept(paramTrans,"")));
+                String vertex1 = (String)p.getParameters().get(0).accept(paramTrans,"");
+                String vertex2 = (String)p.getParameters().get(1).accept(paramTrans,"");
+                String weight = Integer.toString((Integer)p.getParameters().get(2).accept(paramTrans,""));
+                LogicBelief surv = new LogicBelief("edge", vertex1, vertex2, weight);
                 agent.addBelief(surv);
                 agent.broadcastBelief(surv);
                 break;
