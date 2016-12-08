@@ -24,7 +24,7 @@ public class NeedRepairStrategy implements Strategy{
 //			}
 //		}
 		if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0){
-			agent.broadcastBelief(new LogicBelief("needRepair", agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)));
+			agent.broadcastBelief(new LogicBelief("needRepair", agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0), agent.getName()));
 			return MarsUtil.skipAction();
 		}
 		return null;

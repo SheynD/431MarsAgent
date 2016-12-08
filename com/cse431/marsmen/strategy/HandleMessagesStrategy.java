@@ -11,6 +11,10 @@ import eis.iilang.*;
 
 public class HandleMessagesStrategy implements Strategy{
 
+	boolean shouldRepair = false;
+	String repairNode = "";
+	String agentToRepair = "";
+	
 	public Action execute (MarsAgent agent) {
 		handleMessages(agent);
 		return null;
@@ -21,14 +25,24 @@ public class HandleMessagesStrategy implements Strategy{
 		LogicBelief belief = (LogicBelief) msg.value;
 	
 		if (belief.getPredicate().equals("needRepair")) {
-			String node = belief.getParameters().get(0).toString();
-			m.addBelief(new LogicBelief("needRepair", node));
+			repairNode = belief.getParameters().get(0).toString();
+			agentToRepair = belief.getParameters().get(1).toString();
+			shouldRepair = true;
+			//m.addBelief(new LogicBelief("needRepair", node));
 		}
 		else if (belief.getPredicate().equals("repairComing")) {
-			String node = belief.getParameters().get(0).toString();
-			String agentName = belief.getParameters().get(1).toString();
+			String disabledAgent = belief.getParameters().get(0).toString();
+			String node = belief.getParameters().get(1).toString();
+			String agentName = belief.getParameters().get(2).toString();
 			//m.removeBeliefs("repairComing", "", agentName);
-			m.addBelief(new LogicBelief("repairComing", node, agentName));
+			m.addBelief(new LogicBelief("repairComing", disabledAgent, node, agentName));
+		}
+		else if (belief.getPredicate().equals("removeRepair")){
+			m.removeBeliefs("removeRepair");
+			String disabledAgent = belief.getParameters().get(0).toString();
+			String node = belief.getParameters().get(1).toString();
+			String agentName = belief.getParameters().get(2).toString();
+			m.removeBeliefs("repairComing", disabledAgent, node, agentName);
 		}
 		else if (belief.getPredicate().equals("edge")) {
 			String node1 = belief.getParameters().get(0).toString();
@@ -69,8 +83,27 @@ public class HandleMessagesStrategy implements Strategy{
 	public void handleMessages (MarsAgent m) {
 		Collection<Message> messages = m.retrieveAllMessages();
 		
+		
+		
 		for ( Message msg : messages ) {
 			handleMessage(m, msg);
+		}
+		
+		if (shouldRepair && m.getRole().equals("Repairer")){
+			boolean shouldGo = true;
+			for (LogicBelief l : m.getAllBeliefs("repairComing")){
+				System.err.println("checking repairs:" + l.getParameters().get(0) + " " + l.getParameters().get(1) + " " + l.getParameters().get(2) + " disabledAgent: " + repairNode);
+				if (l.getParameters().get(0).equals(agentToRepair)){
+					shouldGo = false;
+					break;
+				}
+			}
+			if (shouldGo){
+				System.err.println(agentToRepair + " " + repairNode + " " + m.getName());
+				LogicBelief lb = new LogicBelief("repairComing", agentToRepair, repairNode, m.getName());
+				m.addBelief(lb);
+				m.broadcastBelief(lb);
+			}
 		}
 	}
 }

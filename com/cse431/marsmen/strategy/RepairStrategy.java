@@ -15,20 +15,22 @@ public class RepairStrategy implements Strategy {
         if (!agent.getAllBeliefs("role").getFirst().getParameters().get(0).equals("Repairer")) {
             return null;
         }
-        if (agent.getAllBeliefs("needRepair").isEmpty() && agent.getAllBeliefs("repairComing").isEmpty()){
+        if (agent.getAllBeliefs("repairComing").isEmpty()){
         	return null;
         }
         ArrayList<String> goals = new ArrayList<String>();
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
         	
         	for (LogicBelief l : agent.getAllBeliefs("repairComing")){
-        		System.out.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1));
-        		if (l.getParameters().get(1).equals(agent.getName())){
-        			if (agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
-        				agent.removeBeliefs("repairComing");
+        		System.err.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1) + " " + l.getParameters().get(2));
+        		if (l.getParameters().get(2).equals(agent.getName())){
+        			if (agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).equals(l.getParameters().get(1))){
+        				LogicBelief lb = new LogicBelief("removeRepair", l.getParameters().get(0), l.getParameters().get(1), l.getParameters().get(2));
+        				agent.addBelief(lb);
+        				agent.broadcastBelief(lb);
         				String entity = "";
         				for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
-        					if (l2.getParameters().get(2).equals(l.getParameters().get(0)) && agent.getTeam().equals(l2.getParameters().get(3)) && l2.getParameters().get(4).equals("disabled")){
+        					if (l2.getParameters().get(2).equals(l.getParameters().get(1)) && agent.getTeam().equals(l2.getParameters().get(3)) && l2.getParameters().get(4).equals("disabled")){
         						entity = l2.getParameters().get(1);
         					}
         				}
@@ -41,20 +43,7 @@ public class RepairStrategy implements Strategy {
         		}
         	}
         	if (goals.size()>0){
-        		System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
-        		return MarsUtil.gotoAction(getDir(goals,agent));
-        	}
-        }
-        if (!agent.getAllBeliefs("needRepair").isEmpty()){
-        	for (LogicBelief l : agent.getAllBeliefs("needRepair")){
-        		goals.add(l.getParameters().get(0));
-        		agent.addBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
-        		agent.broadcastBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
-        		break;
-        	}
-        	agent.removeBeliefs("needRepair");
-        	if (goals.size()>0){
-        		System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
+        		System.err.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
         		return MarsUtil.gotoAction(getDir(goals,agent));
         	}
         }
