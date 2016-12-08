@@ -27,8 +27,9 @@ public class SaboteurStrategy implements Strategy{
         /* Loop thru all visible agents, not on our team */
         if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
             for (LogicBelief b : agent.getAllBeliefs("visibleEntity", agent.getName())) {
-                if (!b.getParameters().get(3).equals(agent.getTeam()) /* Different team */
-                        && b.getParameters().get(4).equals("normal")) { /* Not already disabled */
+            	/* Different team and not already disabled */
+            	if (!b.getParameters().get(3).equals(agent.getTeam()) 
+                        && b.getParameters().get(4).equals("normal")) {
                     String blocation = b.getParameters().get(2) ;
                     String mylocation = agent.getLocation();
                     /* On the same vertex (fix later use range)*/

@@ -35,7 +35,7 @@ public class HandlePerceptStrategy implements Strategy{
             case "deadline": // Don't need
                 break;
             case "edges":
-                agent.removeBeliefs("energy");
+                agent.removeBeliefs("edges");
                 break;
             case "energy":
                 agent.removeBeliefs("energy");
