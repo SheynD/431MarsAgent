@@ -1,6 +1,6 @@
 package com.cse431.marsmen.strategy;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;
@@ -12,17 +12,31 @@ import com.cse431.marsmen.Util;
 public class NaiveRepairStrategy implements Strategy {
 	
 	public Action execute(MarsAgent agent) {
+		/* Only runs for Repairers */
         if (!agent.getAllBeliefs("role").getFirst().getParameters().get(0).equals("Repairer")) {
             return null;
         }
         Util u = new Util(agent);
         
         String entity = "";
-		for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
-			if (agent.getTeam().equals(l2.getParameters().get(3)) && l2.getParameters().get(4).equals("disabled") && u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0)).contains(l2.getParameters().get(2))){
-				entity = l2.getParameters().get(1);
-				agent.removeBeliefs("visibleEntity", l2.getParameters().get(0), l2.getParameters().get(1), l2.getParameters().get(2), l2.getParameters().get(3), l2.getParameters().get(4));
-				agent.addBelief(new LogicBelief("visibleEntity", l2.getParameters().get(0), l2.getParameters().get(1), l2.getParameters().get(2), l2.getParameters().get(3), "normal"));
+        /* Loop thru all visible entities */
+		for (LogicBelief visibleEntity : agent.getAllBeliefs("visibleEntity", agent.getName())){
+			if (agent.getTeam().equals(visibleEntity.getParameters().get(3)) && /* If they are on out team */
+					visibleEntity.getParameters().get(4).equals("disabled") &&  /* And they are disabled */
+					u.getNeighborVertexes(agent.getAllBeliefs("position").getFirst().getParameters().get(0))
+					.contains(visibleEntity.getParameters().get(2))){ /* And they are a neighbor */
+				entity = visibleEntity.getParameters().get(1);
+				/* Shouldn't we just wait for the next round of percepts to update our beliefs? */
+				agent.removeBeliefs("visibleEntity", visibleEntity.getParameters().get(0), 
+						visibleEntity.getParameters().get(1), 
+						visibleEntity.getParameters().get(2), 
+						visibleEntity.getParameters().get(3), 
+						visibleEntity.getParameters().get(4));
+				agent.addBelief(new LogicBelief("visibleEntity", visibleEntity.getParameters().get(0), 
+						visibleEntity.getParameters().get(1), 
+						visibleEntity.getParameters().get(2), 
+						visibleEntity.getParameters().get(3), "normal"));
+				/* Repair this team mate */
 				return MarsUtil.repairAction(entity);
 			}
 		}

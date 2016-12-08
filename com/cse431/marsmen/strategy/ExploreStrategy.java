@@ -12,14 +12,17 @@ import massim.javaagents.agents.MarsUtil;
 
 public class ExploreStrategy implements Strategy{
 	public Action execute(MarsAgent agent) {
-		if (!agent.getAllBeliefs("role").getFirst().getParameters().get(0).equals("Explorer")) {
+		/* Only run if I am an explorer */
+		if (!agent.getRole().equals("Explorer")) {
             return null;
         }
+		/* If I am disabled, can't explore */
         if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0) {
             return null;
         }
+        /* If I am on a probed vertex */
         if (agent.containsBelief(new LogicBelief("probedVertex", agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)))){
-        	//goto a different vertex
+        	/* Go to a different vertex */
         	Util u = new Util(agent);
         	ArrayList <LogicBelief> edges = new ArrayList<>();
         	for (LogicBelief l : agent.getAllBeliefs("edge")){
