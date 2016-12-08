@@ -3,16 +3,16 @@
   <agents>
     <!-- IMPORTANT: make sure to change the class attribute to the
     appropriate classes for your agent! -->
-    <agent name="agentMM1" entity="connectionMM1" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM2" entity="connectionMM2" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM3" entity="connectionMM3" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM4" entity="connectionMM4" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM5" entity="connectionMM5" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM6" entity="connectionMM6" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM7" entity="connectionMM7" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM8" entity="connectionMM8" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM9" entity="connectionMM9" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
-    <agent name="agentMM10" entity="connectionMM10" class="com.cse431.marsmen.MarsAgent" team="DreamTeam"/>
+    <agent name="agentMM1" entity="connectionMM1" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM2" entity="connectionMM2" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM3" entity="connectionMM3" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM4" entity="connectionMM4" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM5" entity="connectionMM5" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM6" entity="connectionMM6" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM7" entity="connectionMM7" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM8" entity="connectionMM8" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM9" entity="connectionMM9" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
+    <agent name="agentMM10" entity="connectionMM10" class="com.cse431.marsmen.MarsAgent" team="marsmen"/>
 
     <agent name="agentA1" entity="connectionA1" class="massim.javaagents.agents.SimpleExplorerAgent" team="A"/>
     <agent name="agentA2" entity="connectionA2" class="massim.javaagents.agents.SimpleExplorerAgent" team="A"/>
