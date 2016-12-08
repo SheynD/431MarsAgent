@@ -14,6 +14,15 @@ As of now, all agents recharge at every time step. See section 5 of EISMASSim de
 
 The agent config files (in marsmen) are confifured to work with Heflin's tournament configuration, and plays against the dummy/simple agents. See Heflin's instructions for download of server-config. No need to utilize agent-configs, dummy10b is incorporated into our config.
 
+# Get it run from the command line / JAR
+1. Follow instructions from heflin's website, saving the JAR to the marsmen directory
+    - Exlipse threw me an error about not having a main class, but it still builds the JAR
+2. CD into the marsmen directiory
+3. Execute this command
+```
+java -ea -classpath ../../javaagents/target/javaagents-2.1.jar:marsmen.jar massim.javaagents.App 
+```
+
 # Beliefs
 
 ### Broadcasted -----------------------------------------------------
