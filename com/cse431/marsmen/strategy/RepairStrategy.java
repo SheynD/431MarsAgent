@@ -22,6 +22,7 @@ public class RepairStrategy implements Strategy {
         }
 
         ArrayList<String> goals = new ArrayList<String>();
+        /* For every repair coming message */
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
             /* For every repair that is incoming */
             for (LogicBelief l : agent.getAllBeliefs("repairComing")){
@@ -81,22 +82,26 @@ public class RepairStrategy implements Strategy {
 
     private String getDir(ArrayList <String> goals, MarsAgent agent){
         Util u = new Util(agent);
+        String position = agent.getLocation();
         /* Use Djikstra's to get the path */
-        ArrayList<String> path = u.getDirection(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0), goals);
+        ArrayList<String> path = u.getDirection(position, goals);
+        System.out.println("Path from "+position+" to "+goals.get(0)+":");
         for (String p : path){
-            System.out.println(p);
-        }
+            System.out.print(p+",");
+        }System.out.println();
         /* If the path is not empty, and the first node is my current location */
-        if (path.size() > 0 && path.get(0).equals(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0))) {
+        if (path.size() > 0 && path.get(0).equals(position)) {
             path.remove(0);
         }
-        /* Not sure what this does, but it appears to return the first move to make */
-        if (path.size() > 0 && !path.get(0).equals("test") && 
-                u.getNeighborVertexes(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)).contains(path.get(0))) {
+        /* If path is not empty, a valid path was found, and the first step is a neighbor */
+        if (path.size() > 0 && !path.get(0).equals("novalidpath") && u.getNeighborVertexes(position).contains(path.get(0))) {
+            System.out.println("Valid direction found... moving from "+position+" to "+path.get(0));
             return path.get(0);
-                }
+        }
         /* Otherwise, go to my first neighbor vertex */
-        else return u.getNeighborVertexes(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0)).get(0);
+        else {
+            return u.getNeighborVertexes(position).get(0);
+        }
     }
 
 }

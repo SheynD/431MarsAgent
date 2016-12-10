@@ -13,16 +13,5 @@
     <entity name="connectionMM8" username="mm8" password="tambe" iilang="yes" xml="yes"/>
     <entity name="connectionMM9" username="mm9" password="tambe" iilang="yes" xml="yes"/>
     <entity name="connectionMM10" username="mm10" password="tambe" iilang="yes" xml="yes"/>
-
-    <entity name="connectionA1" username="a1" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA2" username="a2" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA3" username="a3" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA4" username="a4" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA5" username="a5" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA6" username="a6" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA7" username="a7" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA8" username="a8" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA9" username="a9" password="1" iilang="yes" xml="yes"/>
-    <entity name="connectionA10" username="a10" password="1" iilang="yes" xml="yes"/>
   </entities>
 </interfaceConfig>

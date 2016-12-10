@@ -34,6 +34,7 @@ public class SaboteurStrategy implements Strategy{
                     String mylocation = agent.getLocation();
                     /* On the same vertex (fix later use range)*/
                     if(mylocation.equals(blocation)){
+                        System.out.println("Attacking opponent on same node as me - "+blocation+","+mylocation);
                         return MarsUtil.attackAction(b.getParameters().get(1));
                     }
                 }

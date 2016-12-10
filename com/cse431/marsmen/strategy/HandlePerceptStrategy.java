@@ -90,15 +90,9 @@ public class HandlePerceptStrategy implements Strategy{
                 // Position: (node, agentName, role)
                 agent.removeBeliefs("position", "", agent.getName());
                 String pos = (String)perceptParams.get(0).accept(paramTrans,"");
-                // System.err.println("Adding position: "+pos);
                 LogicBelief posi = new LogicBelief("position", pos, agent.getName(), agent.getRole());
                 agent.addBelief(posi);
                 agent.broadcastBelief(posi);
-                /* Add later
-                   if (agent.getAllBeliefs("vertex", p.getParameters().getFirst().toString()).isEmpty()) {
-                   agent.addBelief(new LogicBelief("vertex", p.getParameters().getFirst().toString(), "-1"));
-                   }
-                   */
                 break;
             case "probedVertex":
                 LogicBelief prob = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
@@ -111,7 +105,6 @@ public class HandlePerceptStrategy implements Strategy{
                 break;
             case "role":
                 agent.addBelief(new LogicBelief("role", (String)p.getParameters().get(0).accept(paramTrans,"")));
-                System.out.println("Adding belief of role:"+(String)p.getParameters().get(0).accept(paramTrans,""));
                 break;
             case "score":
                 agent.removeBeliefs("score");
@@ -199,9 +192,7 @@ public class HandlePerceptStrategy implements Strategy{
     private void handlePercepts(MarsAgent m){
         Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
-        //m.removeBeliefs("visibleEdge");
-        //m.removeBeliefs("visibleEntity");
-        //m.removeBeliefs("visibleVertex");
+        m.removeBeliefs("visibleEntity");
 
         /* Process each percept */
         for ( Percept p : percepts ) {

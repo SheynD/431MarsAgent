@@ -38,6 +38,7 @@ class Edge {
 
 public class Dijkstra {
 
+    /* Update minDistance and previous */
     public static void computePaths(Vertex source, ArrayList<String> goal) {
         source.minDistance = 0;
         PriorityQueue<Vertex> vertexQueue = new PriorityQueue<Vertex>();
@@ -82,7 +83,7 @@ public class Dijkstra {
         }
         computePaths(vertices.get(i), goal);
         int dist = Integer.MAX_VALUE;
-        Vertex ausgabe = new Vertex("test");
+        Vertex ausgabe = new Vertex("novalidpath");
         for (String z : goal) {
             for (Vertex v : vertices) {
                 if (v.name.equals(z) && v.minDistance < dist) {

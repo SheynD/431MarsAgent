@@ -26,7 +26,7 @@ public class Util {
     public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
         Dijkstra dija = new Dijkstra();
         updateVertices();
-        System.out.println("We have "+edges.size()+" edges and "+nodes.size()+" nodes ("+vertices.size()+" vertices");
+        System.out.println("We have "+edges.size()+" edges and "+nodes.size()+" nodes ("+vertices.size()+" vertices)");
         return dija.getDirection(vertices, goal, start);
     }
 
