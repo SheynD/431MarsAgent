@@ -151,7 +151,9 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(new LogicBelief ("visRange", visRange));
                 break;
             case "visibleEdge":
-                LogicBelief vis = new LogicBelief("edge", (String)p.getParameters().get(0).accept(paramTrans,""), (String)p.getParameters().get(1).accept(paramTrans,""), "11");
+                vertex1 = (String)p.getParameters().get(0).accept(paramTrans,"");
+                vertex2 = (String)p.getParameters().get(1).accept(paramTrans,"");
+                LogicBelief vis = new LogicBelief("edge", vertex1, vertex2, "11");
                 agent.addBelief(vis);
                 agent.broadcastBelief(vis);
                 break;

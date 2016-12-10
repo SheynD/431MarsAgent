@@ -20,12 +20,12 @@ public class Util {
         edges = new ArrayList<LogicBelief>();
         nodes = new ArrayList<LogicBelief>();
         vertices = new ArrayList<Vertex>();
+        updateVertices();
     }
 
     /* Get an ArrayList of nodes to traverse (the path) */
     public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
         Dijkstra dija = new Dijkstra();
-        updateVertices();
         System.out.println("We have "+edges.size()+" edges and "+nodes.size()+" nodes ("+vertices.size()+" vertices)");
         return dija.getDirection(vertices, goal, start);
     }

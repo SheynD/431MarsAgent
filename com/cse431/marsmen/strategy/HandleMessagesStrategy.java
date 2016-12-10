@@ -22,20 +22,20 @@ public class HandleMessagesStrategy implements Strategy{
 
         if (belief.getPredicate().equals("needRepair")) {
             String repairNode = belief.getParameters().get(0).toString();
-            m.addBelief(new LogicBelief("needRepair", repairNode));
+            String agentToRepair = belief.getParameters().get(1).toString();
+            m.addBelief(new LogicBelief("needRepair", repairNode, agentToRepair));
         }
         else if (belief.getPredicate().equals("repairComing")) {
-            String disabledAgent = belief.getParameters().get(0).toString();
-            String node = belief.getParameters().get(1).toString();
-            //m.removeBeliefs("repairComing", "", agentName);
-            m.addBelief(new LogicBelief("repairComing", disabledAgent, node));
+            String location = belief.getParameters().get(0).toString();
+            String disabledAgent = belief.getParameters().get(1).toString();
+            String repairAgent = belief.getParameters().get(2).toString();
+            m.addBelief(new LogicBelief("repairComing", location, disabledAgent,repairAgent));
         }
         else if (belief.getPredicate().equals("removeRepair")){
-            m.removeBeliefs("removeRepair");
-            String disabledAgent = belief.getParameters().get(0).toString();
-            String node = belief.getParameters().get(1).toString();
-            String agentName = belief.getParameters().get(2).toString();
-            m.removeBeliefs("repairComing", disabledAgent, node, agentName);
+            String location = belief.getParameters().get(0).toString();
+            String disabledAgent = belief.getParameters().get(1).toString();
+            String repairAgent = belief.getParameters().get(2).toString();
+            m.removeBeliefs("repairComing", location, disabledAgent, repairAgent);
         }
         else if (belief.getPredicate().equals("edge")) {
             String node1 = belief.getParameters().get(0).toString();

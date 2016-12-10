@@ -26,24 +26,29 @@ public class RepairStrategy implements Strategy {
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
             /* For every repair that is incoming */
             for (LogicBelief l : agent.getAllBeliefs("repairComing")){
-                System.out.println("repairComing: " + l.getParameters().get(0) + " " + l.getParameters().get(1));
+                String location = l.getParameters().get(0);
+                String disabledAgent = l.getParameters().get(1);
+                String repairAgent = l.getParameters().get(2);
+                System.out.println("repairComing: " + location + " " + disabledAgent+" "+repairAgent);
                 /* If it was me that said I am coming to repair */
-                if (l.getParameters().get(1).equals(agent.getName())){
+                if (repairAgent.equals(agent.getName())){
                     /* And we are at the same vertex */
-                    if (agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).equals(l.getParameters().get(0))){
+                    if (agent.getLocation().equals(location)){
                         agent.removeBeliefs("repairComing");
                         String entity = "";
                         /* For all visible entities */
                         for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
-                            /* Double check this is the right agent (buy name, team, and disabled */
-                            if (l2.getParameters().get(2).equals(l.getParameters().get(0)) && 
+                            /* Double check this is the right agent (by location, team, and disabled */
+                            if (l2.getParameters().get(2).equals(location) && 
                                     agent.getTeam().equals(l2.getParameters().get(3)) && 
                                     l2.getParameters().get(4).equals("disabled")){
                                 entity = l2.getParameters().get(1);
                             }
                         }
-                        /* Repair this agent! */
+                        /* Repair this agent! Also broadcast that the agent is repaired */
                         if(!entity.equals("")){
+                            agent.broadcastBelief(new LogicBelief("removeRepair",location,disabledAgent,repairAgent));
+                            System.out.println("I am repairing "+entity);
                             return MarsUtil.repairAction(entity);
                         }
 
@@ -54,24 +59,31 @@ public class RepairStrategy implements Strategy {
             }
             /* We have an agent to repair */
             if (goals.size()>0){
-                System.err.println("\n\n\nGoing to repair, next step:" + getDir(goals,agent) + "\n\n\n");
-                return MarsUtil.gotoAction(getDir(goals,agent));
+                String dir = getDir(goals,agent);
+                System.out.println("\nGoing to repair, next step:" + dir + "\n");
+                return MarsUtil.gotoAction(dir);
             }
         }
         /* See if there are other agents that need a repair */
         if (!agent.getAllBeliefs("needRepair").isEmpty()){
             /* This will claim the first agent that needs a repair, and say it is coming */
             for (LogicBelief l : agent.getAllBeliefs("needRepair")){
-                goals.add(l.getParameters().get(0));
-                agent.addBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
-                agent.broadcastBelief(new LogicBelief("repairComing", l.getParameters().get(0), agent.getName()));
-                break;
+                String location = l.getParameters().get(0);
+                String agentName = l.getParameters().get(1);
+                /* Can't repair our selves! */
+                if(!agentName.equals(agent.getName())){
+                    goals.add(l.getParameters().get(0));
+                    LogicBelief lb = new LogicBelief("repairComing", location, agentName, agent.getName());
+                    agent.addBelief(lb);
+                    agent.broadcastBelief(lb);
+                    break;
+                }
             }
             /* Should we just wait until the next percept to remove this? */
             agent.removeBeliefs("needRepair");
             /* Start going towards this agent */
             if (goals.size()>0){
-                System.out.println("\n\n\n" + getDir(goals,agent) + "\n\n\n");
+                System.out.println("\nMoving towards agent that needs repair at " + getDir(goals,agent) + "\n");
                 return MarsUtil.gotoAction(getDir(goals,agent));
             }
         }

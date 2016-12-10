@@ -33,7 +33,7 @@ java -ea -classpath ../../javaagents/target/javaagents-2.1.jar:marsmen.jar massi
 
 *Edge (11 designates unknown cost):		Edge (node1, node2, cost)
 
-*Agent in need of repair:				needRepair (node) , repairComing(node, agentName)
+*Agent in need of repair:				needRepair (node, agentName) , repairComing(node, disabledAgentName, RepairAgentName)
 
 *Enemy Agent:							Enemy (node)
 

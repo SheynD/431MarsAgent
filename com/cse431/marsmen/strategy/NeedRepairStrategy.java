@@ -15,16 +15,10 @@ public class NeedRepairStrategy implements Strategy{
                 agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).isEmpty()){
             return null;
         }
-        //if (!agent.getAllBeliefs("repairComing").isEmpty()) {
-        //        if (agent.getAllBeliefs("repairComing").getFirst().getParameters().get(0)
-        //                        .equals(agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0))) {
-        //                return null;
-        //        }
-        //}
 
         /* If I am disabled, lets broadcast that I need a repair */
         if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0){
-            agent.broadcastBelief(new LogicBelief("needRepair", agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0), agent.getName()));
+            agent.broadcastBelief(new LogicBelief("needRepair", agent.getLocation(), agent.getName()));
             return null;
         }
         return null;
