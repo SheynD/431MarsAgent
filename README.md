@@ -10,9 +10,23 @@ Colonizing Mars so we can send Razavi there
     - In 6.4, point it to the marsmen directory
 5. Follow Heflin's instructions to run the agent!
 
-As of now, all agents recharge at every time step. See section 5 of EISMASSim description for more details
+The agent config files (in marsmen) are confifured to work with Heflin's tournament configuration. See Heflin's instructions for download of server-config. Also download agent-configs. Extract it to the conf directory. 
 
-The agent config files (in marsmen) are confifured to work with Heflin's tournament configuration, and plays against the dummy/simple agents. See Heflin's instructions for download of server-config. No need to utilize agent-configs, dummy10b is incorporated into our config.
+# RECENT UPDATE:
+The only way to avoid the dummy agent's output from clogging our output and making debugging impossible, is to run the teams seperately. So, I have modified our configuration to only control OUR team. In order to have opponents, in a seperate terminal shell, execute startAgents.sh (choosing one of the configs from agent-configs. So, as of now, execution looks something like:
+1. Open up a new shell, and cd into 'massim-2013-1.4/massim/scripts'
+2. Execute ```./startServer.sh``` and choose 'conf//2013-marsmenVdummy.xml'
+3. Open up a new shell, and cd into 'massim-2013-1.4/massim/scripts'
+4. Execute ```./startMarsMonitor.sh``` (Note that you can leave this running for multiple runs, you don't need to close and reopen every time)
+5. Open up a new shell, and cd into 'massim-2013-1.4/javaagents/scripts'
+6. Execute ```./startAgents.sh``` and choose 'dummy10a' (or any 10 agent config). This starts our opponent team.
+7. Choose how to run OUR agents:
+    - Run in eclipse, same way we have been
+    - Run with build and execute script: cd into our Git Repo, then execute ```./build.sh```
+8. Go back to the server (startServer) terminal window. You should see the 20 agents (10 from each team) have connected. Hit enter to start the game. 
+9. Sit back and enjoy our agents killin it.
+
+
 
 # Get it run from the command line / JAR
 1. Follow instructions from heflin's website, saving the JAR to the marsmen directory
@@ -27,17 +41,18 @@ java -ea -classpath ../../javaagents/target/javaagents-2.1.jar:marsmen.jar massi
 
 ### Broadcasted -----------------------------------------------------
 
-*Position of Agent:						Position (node, agentName, role)
+*Position of Agent:                                             Position (node, agentName, role)
 
-*Node/Vertex (-1 designates unknown):	Node (name, value)
+*Node/Vertex (-1 designates unknown):   Node (name, value)
 
-*Edge (11 designates unknown cost):		Edge (node1, node2, cost)
+*Edge (11 designates unknown cost):     Edge (node1, node2, cost)
 
-*Agent in need of repair:				needRepair (node, agentName) , repairComing(node, disabledAgentName, RepairAgentName)
+*Agent in need of repair:               needRepair (node, agentName), 
+                                        repairComing(node, disabledAgentName, RepairAgentName)
 
-*Enemy Agent:							Enemy (node)
+*Enemy Agent:                           Enemy (node)
 
-*Visible Agent (opponent or teammate):	VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
+*Visible Agent (opponent or teammate):  VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
 
 ### Internals (derived from percepts) -----------------------------------
 
