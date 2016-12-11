@@ -71,6 +71,10 @@ public class HandleMessagesStrategy implements Strategy{
             m.removeBeliefs("visibleAgent", "", vehicleName, "", "", "");
             m.addBelief(new LogicBelief("visibleAgent", reporterName, vehicleName, vertex, team, isDisabled));
         }
+        else if (belief.getPredicate().equals("enemySaboteur")){
+        	String vehicleName = belief.getParameters().get(0).toString();
+        	m.addBelief(new LogicBelief("enemySaboteur", vehicleName));
+        }
     }
 
     public void handleMessages (MarsAgent m) {

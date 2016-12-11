@@ -172,6 +172,14 @@ public class HandlePerceptStrategy implements Strategy{
                 LogicBelief ve = new LogicBelief("visibleEntity", agent.getName(),vehicle_name,vertex,team,disabled);
                 agent.addBelief(ve);
                 break;
+            case "inspectedEntity":
+            	if (p.getParameters().get(2).equals("Saboteur")){
+            		System.err.println("inspected: " + p.getParameters().get(2) + " name: " + p.getParameters().get(0));
+            		LogicBelief newBelief = new LogicBelief("enemySaboteur", p.getParameters().get(0).toString());
+            		agent.addBelief(newBelief);
+                	agent.broadcastBelief(newBelief);
+            	}
+            	
             case "visibleVertex":
                 LogicBelief visV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
                 agent.addBelief(visV);
