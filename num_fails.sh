@@ -1,12 +1,22 @@
 #!/bin/bash
 LOG=$1
-FAILURES="_resources _attacked _parried _unreachable _out_of_range _in_range _wrong_param _role _status _limit"
+FAILURES="failed_resources 
+failed_attacked 
+failed_parried 
+failed_unreachable 
+failed_out_of_range 
+failed_in_range 
+failed_wrong_param 
+failed_role 
+failed_status 
+failed_limit
+failed
+"
 
 echo "Total failures: "
 cat $1 | grep "(failed" | wc -l 
 
 for FAILURE in $FAILURES; do
-    echo "failed$FAILURE:"
-    cat $1 | grep "(failed$FAILURE" | wc -l 
+    echo "$FAILURE:"
+    cat $1 | grep "($FAILURE)" | wc -l 
 done
-    

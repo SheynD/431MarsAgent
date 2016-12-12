@@ -15,9 +15,9 @@ public class WanderStrategy implements Strategy{
      * does not get executed. Maybe we should add some randomness (ie, fail 1/2 the time)?
      */
     public Action execute (MarsAgent agent) {
-        /* If I am disabled, can't explore */
-        if (agent.getHealth() == 0 || agent.getEnergy() < 2) {
-            System.out.println("Not wandering... "+agent.getHealth()+" "+agent.getEnergy());
+        /* If I am low on energy can't explore */
+        if (agent.getEnergy() ==0 ) {
+            System.out.println("Not wandering... "+agent.getEnergy());
             return null;
         }
         Util u = new Util(agent);

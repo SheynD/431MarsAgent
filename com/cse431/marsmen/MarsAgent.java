@@ -34,7 +34,7 @@ public class MarsAgent extends Agent {
         strategies.add(new ParryStrategy());
         strategies.add(new ExploreStrategy());
         strategies.add(new SurveyStrategy());
-        strategies.add(new JoinZoneStrategy());
+        //strategies.add(new JoinZoneStrategy());
         strategies.add(new WanderStrategy());
         strategies.add(new SkipStrategy());
     }

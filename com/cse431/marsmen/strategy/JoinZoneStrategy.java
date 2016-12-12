@@ -15,8 +15,8 @@ public class JoinZoneStrategy implements Strategy{
         String myZoneScore = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
         if(!myZoneScore.equals("0"))
             return null;
-        /* If disabled or low on energy */
-        if(agent.getHealth()==0 || agent.getEnergy() < 4)
+        /* If low on energy */
+        if(agent.getEnergy() ==0)
             return null;
         /* Find largest zone */
         int largestZoneVal = 0;
