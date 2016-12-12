@@ -18,6 +18,10 @@ public class InspectStrategy implements Strategy{
         if (!agent.getRole().equals("Inspector")) {
             return null;
         }
+        /* If I am disabled, can't inspect */
+        if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0) {
+            return null;
+        }
         /* Loop thru all visible agents, not on our team */
         Util u = new Util(agent);
         if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
