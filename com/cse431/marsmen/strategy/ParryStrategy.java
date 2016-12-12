@@ -11,6 +11,9 @@ import massim.javaagents.agents.MarsUtil;
 
 public class ParryStrategy implements Strategy{
 
+    /* To Do
+     * Use the distance to the opponent sabetuer. If far away, don't parry 
+     */
     @Override
     public Action execute (MarsAgent agent) {
         /* Only if the agent can parry */
