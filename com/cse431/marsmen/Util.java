@@ -132,6 +132,7 @@ public class Util {
         }
         /* Otherwise, go to my first neighbor vertex */
         else {
+            System.out.println("Issue in getDir, just going to neighbor");
             return getNeighborVertexes(position).get(0);
         }
     }

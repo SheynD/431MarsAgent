@@ -75,6 +75,11 @@ public class HandleMessagesStrategy implements Strategy{
         	String vehicleName = belief.getParameters().get(0).toString();
         	m.addBelief(new LogicBelief("enemySaboteur", vehicleName));
         }
+        else if (belief.getPredicate().equals("inZone")){
+        	String location = belief.getParameters().get(0).toString();
+        	String zoneScore = belief.getParameters().get(1).toString();
+        	m.addBelief(new LogicBelief("inZone",location,zoneScore));
+        }
     }
 
     public void handleMessages (MarsAgent m) {

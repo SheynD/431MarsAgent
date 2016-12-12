@@ -29,6 +29,7 @@ public class ParryStrategy implements Strategy{
                 String disabled = b.getParameters().get(4);
                 String location = b.getParameters().get(2);
                 Util u = new Util(agent);
+                //TODO add current node to list of neighbor
                 /* Different team and not disabled */
                 if (!team.equals(agent.getTeam()) 
                         && disabled.equals("normal") && u.getNeighborVertexes(agent.getLocation()).contains(location)) {
