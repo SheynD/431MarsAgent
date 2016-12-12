@@ -1,6 +1,7 @@
 package com.cse431.marsmen.strategy;
 
 import com.cse431.marsmen.MarsAgent;
+import com.cse431.marsmen.Util;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.*;
@@ -26,9 +27,11 @@ public class ParryStrategy implements Strategy{
                 String enemyName = b.getParameters().get(1);
                 String team = b.getParameters().get(3);
                 String disabled = b.getParameters().get(4);
+                String location = b.getParameters().get(2);
+                Util u = new Util(agent);
                 /* Different team and not disabled */
                 if (!team.equals(agent.getTeam()) 
-                        && disabled.equals("normal")) {
+                        && disabled.equals("normal") && u.getNeighborVertexes(agent.getLocation()).contains(location)) {
                     if (!agent.getAllBeliefs("enemySaboteur").isEmpty()){
                         for (LogicBelief en : agent.getAllBeliefs("enemySaboteur")){
                             String saboteurName = en.getParameters().get(0);
