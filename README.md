@@ -53,7 +53,7 @@ java -ea -classpath ../../javaagents/target/javaagents-2.1.jar:marsmen.jar massi
 
 *Enemy Agent:                           Enemy (node)
 
-*Visible Agent (opponent or teammate):  VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
+*Visible Entity (opponent or teammate):  VisibleEntity (reporterName, vehicleName, vertex, team, isDisabled)
 
 ### Internals (derived from percepts) -----------------------------------
 
@@ -98,6 +98,9 @@ strength (strength)
 
 Agent's Visible Range:  
 visRange (distance)  
+
+Enemy Sabateur
+enemySaboteur (name)
 
 Total Money:  
 money (money)  

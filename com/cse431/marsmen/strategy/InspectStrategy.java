@@ -19,15 +19,20 @@ public class InspectStrategy implements Strategy{
             return null;
         }
         /* Loop thru all visible agents, not on our team */
-		Util u = new Util(agent);
+        Util u = new Util(agent);
         if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
             for (LogicBelief b : agent.getAllBeliefs("visibleEntity", agent.getName())) {
-            	/* Different team and is neighbor */
-            	if (!b.getParameters().get(3).equals(agent.getTeam())
-						&& u.getNeighborVertexes(agent.getLocation()).contains(b.getParameters().get(2))
-						&& agent.getAllBeliefs("inspectedEntity", b.getParameters().get(1)).isEmpty()) {
-					return MarsUtil.inspectAction();
-				}
+                String enemyName = b.getParameters().get(1);
+                String location = b.getParameters().get(2);
+                String team = b.getParameters().get(3);
+                String disabled = b.getParameters().get(4);
+                /* Different team, is neighbor, and is not inspected */
+                if (!team.equals(agent.getTeam())
+                        && u.getNeighborVertexes(agent.getLocation()).contains(location)
+                        && agent.getAllBeliefs("inspectedEntity", enemyName).isEmpty()) {
+                    System.out.println("I am inspecting!");
+                    return MarsUtil.inspectAction();
+                }
             }
         }
 

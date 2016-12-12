@@ -7,7 +7,7 @@ SOURCES="${MARSMEN} ${STRATEGIES}"
 
 OUT_JAR="marsmen.jar"
 
-if javac -d build -cp ${JAVAAGENTS_JAR} ${SOURCES}; then
+if javac -d build -Xlint:deprecation -cp ${JAVAAGENTS_JAR} ${SOURCES}; then
     echo "Compile succeeded"
 else
     echo "Compile failed"

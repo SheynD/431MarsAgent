@@ -173,9 +173,14 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.addBelief(ve);
                 break;
             case "inspectedEntity":
-            	if (p.getParameters().get(2).equals("Saboteur")){
-            		System.err.println("inspected: " + p.getParameters().get(2) + " name: " + p.getParameters().get(0));
-            		LogicBelief newBelief = new LogicBelief("enemySaboteur", p.getParameters().get(0).toString());
+                String name = (String)p.getParameters().get(0).accept(paramTrans,"");
+                String role = (String)p.getParameters().get(2).accept(paramTrans,"");
+                /* First, add to known inspected */
+                agent.addBelief(new LogicBelief("inspectedEntity",name));
+                /* Now, if it is a saboteur, add to known saboteurs */
+            	if (role.equals("Saboteur")){
+            		System.out.println("Found Saboteur: " + role + " name: " + name);
+            		LogicBelief newBelief = new LogicBelief("enemySaboteur", name);
             		agent.addBelief(newBelief);
                 	agent.broadcastBelief(newBelief);
             	}
