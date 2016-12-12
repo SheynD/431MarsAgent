@@ -15,7 +15,10 @@ public class InspectStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
         /* Only if the agent is a inspector */
-        if (!agent.getRole().equals("Inspector")) {
+        if (!agent.getRole().equals("Inspector"))
+            return null;
+        /* If not enough energy to inspect */
+        if (agent.getEnergy() < 2){
             return null;
         }
         /* If I am disabled, can't inspect */

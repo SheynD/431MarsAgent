@@ -18,9 +18,11 @@ public class ParryStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
         /* Only if the agent can parry */
-        if (!agent.getRole().equals("Saboteur") && !agent.getRole().equals("Repairer") && !agent.getRole().equals("Sentinel")) {
+        if (!agent.getRole().equals("Saboteur") && !agent.getRole().equals("Repairer") && !agent.getRole().equals("Sentinel")) 
             return null;
-        }
+        /* Can't be disabled */
+        if (agent.getHealth()==0)
+            return null;
         /* Loop thru all visible agents, not on our team */
         if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {
             for (LogicBelief b : agent.getAllBeliefs("visibleEntity", agent.getName())) {
