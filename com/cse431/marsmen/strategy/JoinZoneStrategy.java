@@ -12,8 +12,9 @@ public class JoinZoneStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
     	/* If in a zone, don't do anything */
-        String myZoneScore = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
-        if(!myZoneScore.equals("0"))
+        String myZoneScoreStr = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
+        int myZoneScore = Integer.parseInt(myZoneScoreStr);
+        if(myZoneScore > 5)
             return null;
         /* If low on energy */
         if(agent.getEnergy() ==0)
