@@ -6,15 +6,13 @@ import massim.javaagents.agents.MarsUtil;
 import eis.iilang.Action;
 
 public class RechargeStrategy implements Strategy{
-    /* To do
-     * Check if last action failed due to low energy... then recharge 
-     * */
-
     @Override
     public Action execute (MarsAgent agent) {
     	/* Recharge if my energy is below this threshold */
-        if (agent.getEnergy() < 4)
+        if ((double)agent.getEnergy()/(double)agent.getMaxEnergy() < 0.25 && agent.getHealth()!=0){
+            System.out.println("Recharging..."+(double)agent.getEnergy()/(double)agent.getMaxEnergy() );
             return MarsUtil.rechargeAction();
+        }
         /* If the last action failed (not buy) because we didn't have enough energy (Untested)*/
         if( !agent.getAllBeliefs("lastAction").getFirst().getParameters().get(0).equals("buy") && 
         		agent.getAllBeliefs("lastActionResult").getFirst().getParameters().get(0).equals("failed_resources")){

@@ -42,18 +42,20 @@ java -ea -classpath ../../javaagents/target/javaagents-2.1.jar:marsmen.jar massi
 
 ### Broadcasted -----------------------------------------------------
 
-*Position of Agent:                                             Position (node, agentName, role)
+* Position of Agent:                                             Position (node, agentName, role)
 
-*Node/Vertex (-1 designates unknown):   Node (name, value)
+* Node/Vertex (-1 designates unknown):   Node (name, value)
 
-*Edge (11 designates unknown cost):     Edge (node1, node2, cost)
+* Edge (11 designates unknown cost):     Edge (node1, node2, cost)
 
-*Agent in need of repair:               needRepair (node, agentName), 
+* Agent in need of repair:               needRepair (node, agentName), 
                                         repairComing(node, disabledAgentName, RepairAgentName)
 
-*Enemy Agent:                           Enemy (node)
+* Enemy Agent:                           Enemy (node)
 
-*Visible Entity (opponent or teammate):  VisibleEntity (reporterName, vehicleName, vertex, team, isDisabled)
+* Visible Entity (opponent or teammate):  VisibleEntity (reporterName, vehicleName, vertex, team, isDisabled)
+
+* Zone: inZone(position,zoneScore)
 
 ### Internals (derived from percepts) -----------------------------------
 

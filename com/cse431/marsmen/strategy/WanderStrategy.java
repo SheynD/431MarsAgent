@@ -16,7 +16,8 @@ public class WanderStrategy implements Strategy{
      */
     public Action execute (MarsAgent agent) {
         /* If I am disabled, can't explore */
-        if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0) {
+        if (agent.getHealth() == 0 || agent.getEnergy() < 2) {
+            System.out.println("Not wandering... "+agent.getHealth()+" "+agent.getEnergy());
             return null;
         }
         Util u = new Util(agent);

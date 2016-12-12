@@ -24,6 +24,7 @@ public class MarsAgent extends Agent {
         strategies = new ArrayList<Strategy>();
         strategies.add(new HandlePerceptStrategy());
         strategies.add(new HandleMessagesStrategy());
+        strategies.add(new BroadcastZoneStrategy());
         strategies.add(new IncreaseVisibilityRangeStrategy());
         strategies.add(new RechargeStrategy());
         strategies.add(new NeedRepairStrategy());
@@ -31,9 +32,9 @@ public class MarsAgent extends Agent {
         strategies.add(new InspectStrategy());
         strategies.add(new SaboteurStrategy());
         strategies.add(new ParryStrategy());
-        //strategies.add(new ZoningStrategy());
         strategies.add(new ExploreStrategy());
         strategies.add(new SurveyStrategy());
+        strategies.add(new JoinZoneStrategy());
         strategies.add(new WanderStrategy());
         strategies.add(new SkipStrategy());
     }
@@ -62,6 +63,20 @@ public class MarsAgent extends Agent {
             return -1;
         }
         return Integer.parseInt(getAllBeliefs("energy").getFirst().getParameters().get(0));
+    }
+
+    public int getHealth(){
+        if (getAllBeliefs("health").isEmpty()) {
+            return -1;
+        }
+        return Integer.parseInt(getAllBeliefs("health").getFirst().getParameters().get(0)) ;
+    }
+
+    public int getMaxEnergy(){
+        if (getAllBeliefs("energy").isEmpty()) {
+            return -1;
+        }
+        return Integer.parseInt(getAllBeliefs("energy").getFirst().getParameters().get(0)) ;
     }
 
     /* Override the default All Beliefs to accept multiple predicates */
