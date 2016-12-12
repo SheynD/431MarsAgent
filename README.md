@@ -14,6 +14,7 @@ The agent config files (in marsmen) are confifured to work with Heflin's tournam
 
 # RECENT UPDATE:
 The only way to avoid the dummy agent's output from clogging our output and making debugging impossible, is to run the teams seperately. So, I have modified our configuration to only control OUR team. In order to have opponents, in a seperate terminal shell, execute startAgents.sh (choosing one of the configs from agent-configs. So, as of now, execution looks something like:
+
 1. Open up a new shell, and cd into 'massim-2013-1.4/massim/scripts'
 2. Execute ```./startServer.sh``` and choose 'conf//2013-marsmenVdummy.xml'
 3. Open up a new shell, and cd into 'massim-2013-1.4/massim/scripts'
