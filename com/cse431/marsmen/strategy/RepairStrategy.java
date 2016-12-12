@@ -22,6 +22,7 @@ public class RepairStrategy implements Strategy {
         }
 
         ArrayList<String> goals = new ArrayList<String>();
+        Util u = new Util(agent);
         /* For every repair coming message */
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
             /* For every repair that is incoming */
@@ -59,7 +60,7 @@ public class RepairStrategy implements Strategy {
             }
             /* We have an agent to repair */
             if (goals.size()>0){
-                String dir = getDir(goals,agent);
+                String dir = u.getDir(goals);
                 System.out.println("\nGoing to repair, next step:" + dir + "\n");
                 return MarsUtil.gotoAction(dir);
             }
@@ -83,8 +84,8 @@ public class RepairStrategy implements Strategy {
             agent.removeBeliefs("needRepair");
             /* Start going towards this agent */
             if (goals.size()>0){
-                System.out.println("\nMoving towards agent that needs repair at " + getDir(goals,agent) + "\n");
-                return MarsUtil.gotoAction(getDir(goals,agent));
+                System.out.println("\nMoving towards agent that needs repair at " + u.getDir(goals) + "\n");
+                return MarsUtil.gotoAction(u.getDir(goals));
             }
         }
 
@@ -92,28 +93,5 @@ public class RepairStrategy implements Strategy {
 
     }
 
-    private String getDir(ArrayList <String> goals, MarsAgent agent){
-        Util u = new Util(agent);
-        String position = agent.getLocation();
-        /* Use Djikstra's to get the path */
-        ArrayList<String> path = u.getDirection(position, goals);
-        System.out.println("Path from "+position+" to "+goals.get(0)+":");
-        for (String p : path){
-            System.out.print(p+",");
-        }System.out.println();
-        /* If the path is not empty, and the first node is my current location */
-        if (path.size() > 0 && path.get(0).equals(position)) {
-            path.remove(0);
-        }
-        /* If path is not empty, a valid path was found, and the first step is a neighbor */
-        if (path.size() > 0 && !path.get(0).equals("novalidpath") && u.getNeighborVertexes(position).contains(path.get(0))) {
-            System.out.println("Valid direction found... moving from "+position+" to "+path.get(0));
-            return path.get(0);
-        }
-        /* Otherwise, go to my first neighbor vertex */
-        else {
-            return u.getNeighborVertexes(position).get(0);
-        }
-    }
 
 }

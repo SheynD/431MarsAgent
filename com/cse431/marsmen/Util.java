@@ -110,4 +110,29 @@ public class Util {
         }
         return vertexes;
     }
+
+    /* Return the next node to go to, given the list of goal nodes */
+    public String getDir(ArrayList <String> goals){
+        String position = agent.getLocation();
+        /* Use Djikstra's to get the path */
+        ArrayList<String> path = getDirection(position, goals);
+        System.out.println("Path from "+position+" to "+goals.get(0));
+        System.out.println("\tNote, goal size:"+goals.size()+"Final dest: "+path.get(path.size()-1));
+        for (String p : path){
+            System.out.print(p+",");
+        }System.out.println();
+        /* If the path is not empty, and the first node is my current location */
+        if (path.size() > 0 && path.get(0).equals(position)) {
+            path.remove(0);
+        }
+        /* If path is not empty, a valid path was found, and the first step is a neighbor */
+        if (path.size() > 0 && !path.get(0).equals("novalidpath") && getNeighborVertexes(position).contains(path.get(0))) {
+            System.out.println("Valid direction found... moving from "+position+" to "+path.get(0));
+            return path.get(0);
+        }
+        /* Otherwise, go to my first neighbor vertex */
+        else {
+            return getNeighborVertexes(position).get(0);
+        }
+    }
 }
