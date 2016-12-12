@@ -32,7 +32,7 @@ public class InspectStrategy implements Strategy{
                         && agent.getAllBeliefs("inspectedEntity", enemyName).isEmpty()) {
                     System.out.println("I am inspecting!");
                     System.out.println(enemyName+" "+location+" "+team+" "+disabled);
-                    return MarsUtil.inspectAction();
+                    return MarsUtil.inspectAction(enemyName);
                 }
             }
         }
