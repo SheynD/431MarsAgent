@@ -25,6 +25,7 @@ public class MarsAgent extends Agent {
         strategies.add(new HandlePerceptStrategy());
         strategies.add(new HandleMessagesStrategy());
         strategies.add(new BroadcastZoneStrategy());
+        strategies.add(new IncreaseVisibilityRangeStrategy());
         strategies.add(new RechargeStrategy());
         strategies.add(new NeedRepairStrategy());
         strategies.add(new RepairStrategy());
