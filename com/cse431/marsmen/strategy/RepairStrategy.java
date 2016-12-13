@@ -31,31 +31,21 @@ public class RepairStrategy implements Strategy {
                 String disabledAgent = l.getParameters().get(1);
                 String repairAgent = l.getParameters().get(2);
                 System.out.println("repairComing: " + location + " " + disabledAgent+" "+repairAgent);
-                /* If it was me that said I am coming to repair */
-                if (repairAgent.equals(agent.getName())){
+                /* If it was me that said I am coming to repair, and I am not repairing myself */
+                if (repairAgent.equals(agent.getName()) && !disabledAgent.equals(agent.getName())){
                     /* And we are at the same vertex */
                     if (agent.getLocation().equals(location)){
                         agent.removeBeliefs("repairComing");
-                        String entity = "";
-                        /* For all visible entities */
-                        for (LogicBelief l2 : agent.getAllBeliefs("visibleEntity", agent.getName())){
-                            /* Double check this is the right agent (by location, team, and disabled */
-                            if (l2.getParameters().get(2).equals(location) && 
-                                    agent.getTeam().equals(l2.getParameters().get(3)) && 
-                                    l2.getParameters().get(4).equals("disabled")){
-                                entity = l2.getParameters().get(1);
-                            }
-                        }
                         /* Repair this agent! Also broadcast that the agent is repaired */
-                        if(!entity.equals("")){
+                        if(!disabledAgent.equals("")){
                             agent.broadcastBelief(new LogicBelief("removeRepair",location,disabledAgent,repairAgent));
-                            System.out.println("I am repairing "+entity);
-                            return MarsUtil.repairAction(entity);
+                            System.out.println("I am repairing "+disabledAgent);
+                            return MarsUtil.repairAction(disabledAgent);
                         }
 
                     }
                     /* We should keep going towards this agent to repair it */
-                    goals.add(l.getParameters().get(0));
+                    goals.add(location);
                 }
             }
             /* We have an agent to repair */

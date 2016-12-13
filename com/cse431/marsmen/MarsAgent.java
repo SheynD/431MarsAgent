@@ -42,7 +42,7 @@ public class MarsAgent extends Agent {
     /* What to do at this time step */
     public Action step() {
         
-        println("\n\n");
+        println("\n"+getName()+"\n");
         Action action = null;
         for (Strategy strat : strategies) {
             action = strat.execute(this);
@@ -51,7 +51,7 @@ public class MarsAgent extends Agent {
         
         return action;
     }
-
+    
     /* Return location of current agent */
     public String getLocation(){
         return getAllBeliefs("position", "", getName()).getFirst().getParameters().get(0);
