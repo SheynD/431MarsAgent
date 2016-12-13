@@ -8,7 +8,7 @@ import eis.iilang.Action;
 public class IncreaseVisibilityRangeStrategy implements Strategy{
     /* 
      * Check if last action failed due to in_range or out_of_range... then buy sensor to increase visibility range 
-     * */
+     */
 
     @Override
     public Action execute (MarsAgent agent) {
