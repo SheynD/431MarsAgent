@@ -13,11 +13,15 @@ public class RepairStrategy implements Strategy {
 
     public Action execute(MarsAgent agent) {
         /* Only run if we are a repairer */
-        if (!agent.getRole().equals("Repairer")) {
+        if (!agent.getRole().equals("Repairer")) 
             return null;
-        }
         /* Only run if someone needs a repair and no repair is on its way */
-        if (agent.getAllBeliefs("needRepair").isEmpty() && agent.getAllBeliefs("repairComing").isEmpty()){
+        if (agent.getAllBeliefs("needRepair").isEmpty() && agent.getAllBeliefs("repairComing").isEmpty())
+            return null;
+        /* Make sure I have enough energy */
+        System.out.println("Energy: "+agent.getEnergy()+" Health: "+agent.getHealth());
+        if ((agent.getHealth()<=0 && agent.getEnergy()<3) ||  agent.getEnergy() < 2){
+            System.out.println("Not repairing not enough energy");
             return null;
         }
 
