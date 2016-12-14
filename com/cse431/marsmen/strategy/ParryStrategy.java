@@ -20,8 +20,8 @@ public class ParryStrategy implements Strategy{
         /* Only if the agent can parry */
         if (!agent.getRole().equals("Saboteur") && !agent.getRole().equals("Repairer") && !agent.getRole().equals("Sentinel")) 
             return null;
-        /* Can't be disabled */
-        if (agent.getHealth()==0)
+        /* Can't be disabled, and need Energy<=2 */
+        if (agent.getHealth()==0 || agent.getEnergy() < 2)
             return null;
         /* Loop thru all visible agents, not on our team */
         if (!agent.getAllBeliefs("visibleEntity", agent.getName()).isEmpty()) {

@@ -17,7 +17,8 @@ public class NeedRepairStrategy implements Strategy{
         }
 
         /* If I am disabled, lets broadcast that I need a repair */
-        if (Integer.parseInt(agent.getAllBeliefs("health").getFirst().getParameters().get(0)) == 0){
+        if (agent.getHealth() == 0){
+            System.out.println("Broadcasting needRepair: "+agent.getLocation()+","+agent.getName());
             agent.broadcastBelief(new LogicBelief("needRepair", agent.getLocation(), agent.getName()));
             return null;
         }

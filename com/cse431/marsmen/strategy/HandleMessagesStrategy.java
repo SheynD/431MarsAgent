@@ -23,6 +23,7 @@ public class HandleMessagesStrategy implements Strategy{
         if (belief.getPredicate().equals("needRepair")) {
             String repairNode = belief.getParameters().get(0).toString();
             String agentToRepair = belief.getParameters().get(1).toString();
+            System.out.println("Adding belief that agent: "+agentToRepair+" needs repair at "+repairNode);
             m.addBelief(new LogicBelief("needRepair", repairNode, agentToRepair));
         }
         else if (belief.getPredicate().equals("repairComing")) {

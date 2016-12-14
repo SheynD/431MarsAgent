@@ -25,6 +25,7 @@ public class Util {
 
     /* Get an ArrayList of nodes to traverse (the path) */
     public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
+        System.out.println("Running Dijkstra");
         Dijkstra dija = new Dijkstra();
         System.out.println("We have "+edges.size()+" edges and "+nodes.size()+" nodes ("+vertices.size()+" vertices)");
         return dija.getDirection(vertices, goal, start);

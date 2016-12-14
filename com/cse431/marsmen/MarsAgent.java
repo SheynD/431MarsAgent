@@ -22,36 +22,46 @@ public class MarsAgent extends Agent {
         
         // Set subsumption hierarchy
         strategies = new ArrayList<Strategy>();
+        /* Strategies that don't return actions */
         strategies.add(new HandlePerceptStrategy());
         strategies.add(new HandleMessagesStrategy());
         strategies.add(new BroadcastZoneStrategy());
-        strategies.add(new IncreaseVisibilityRangeStrategy());
-        strategies.add(new RechargeStrategy());
         strategies.add(new NeedRepairStrategy());
+        /* Strategies that could return an action */
+        strategies.add(new RechargeStrategy());
+        strategies.add(new IncreaseVisibilityRangeStrategy());
+        /* Role dependent strats */
         strategies.add(new RepairStrategy());
+        strategies.add(new SurveyStrategy());
         strategies.add(new InspectStrategy());
         strategies.add(new SaboteurStrategy());
+        /* Generic, catch all strats */
         strategies.add(new ParryStrategy());
         strategies.add(new ExploreStrategy());
-        strategies.add(new SurveyStrategy());
         strategies.add(new JoinZoneStrategy());
         strategies.add(new WanderStrategy());
+        /* Default to recharge */
         strategies.add(new SkipStrategy());
     }
 
     /* What to do at this time step */
     public Action step() {
         
-        println("\n\n");
+        println("\n"+getName()+"\n");
         Action action = null;
+        Strategy chosen = null;
         for (Strategy strat : strategies) {
             action = strat.execute(this);
-            if (action != null) break;
+            if (action != null) {
+                chosen = strat;
+                break;
+            }
         }
+        println("CHOSEN STRATEGY: "+chosen.getClass().getSimpleName());
         
         return action;
     }
-
+    
     /* Return location of current agent */
     public String getLocation(){
         return getAllBeliefs("position", "", getName()).getFirst().getParameters().get(0);
