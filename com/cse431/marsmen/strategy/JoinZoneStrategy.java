@@ -12,12 +12,11 @@ public class JoinZoneStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
     	/* If in a zone, don't do anything */
-        String myZoneScoreStr = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
-        int myZoneScore = Integer.parseInt(myZoneScoreStr);
-        if(myZoneScore > 5)
+        String myZoneScore = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
+        if(!myZoneScore.equals("0"))
             return null;
-        /* If low on energy */
-        if(agent.getEnergy() ==0)
+        /* If disabled or low on energy */
+        if(agent.getHealth()==0 || agent.getEnergy() < 4)
             return null;
         /* Find largest zone */
         int largestZoneVal = 0;
@@ -43,7 +42,14 @@ public class JoinZoneStrategy implements Strategy{
         /* Now, lets go there */
         Util u = new Util(agent);
         String dir = u.getDir(goals);
-        System.out.println("\nGoing to join zone, next step:" + dir + "\n");
-        return MarsUtil.gotoAction(dir);
+        for (LogicBelief edge : agent.getAllBeliefs("edge")){
+			if ((dir.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (dir.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){				
+                if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
+                	System.out.println("\nGoing to join zone, next step:" + dir + "\n");
+                    return MarsUtil.gotoAction(dir);
+				}
+			}
+		}
+        return null;
     }
 }

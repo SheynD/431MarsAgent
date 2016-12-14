@@ -6,6 +6,7 @@ import java.util.Collections;
 import com.cse431.marsmen.MarsAgent;
 import com.cse431.marsmen.Util;
 
+import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;
 import massim.javaagents.agents.MarsUtil;
 
@@ -24,8 +25,18 @@ public class WanderStrategy implements Strategy{
         /* All neighbor vertices to my vertex */
         ArrayList <String> verticies = u.getNeighborVertexes(agent.getLocation());
         /* Choose a random one to go to */
-        Collections.shuffle(verticies);
-        System.out.println("Wandering to "+verticies.get(0));
-        return MarsUtil.gotoAction(verticies.get(0));
+		Collections.shuffle(verticies);
+		for (String v : verticies){
+			for (LogicBelief edge : agent.getAllBeliefs("edge")){
+				if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){					
+					if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
+						return MarsUtil.gotoAction(v);
+					}
+				}
+			}
+		}
+		return null;
+		
+        
     }
 }

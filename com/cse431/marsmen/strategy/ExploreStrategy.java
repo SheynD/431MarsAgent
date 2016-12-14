@@ -48,8 +48,14 @@ public class ExploreStrategy implements Strategy{
                         continue;
                     }
                     else {
-                        System.out.println("Going to vertex "+v+" to go to an unprobed vertex");
-                        return MarsUtil.gotoAction(v);
+                    	for (LogicBelief edge : agent.getAllBeliefs("edge")){
+            				if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){
+            					if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
+            						System.out.println("Going to vertex "+v+" to go to an unprobed vertex");
+            						return MarsUtil.gotoAction(v);
+            					}
+            				}
+            			}
                     }
                 }
                 return null;
