@@ -1,6 +1,7 @@
 package com.cse431.marsmen.strategy;
 
 import com.cse431.marsmen.MarsAgent;
+import com.cse431.marsmen.Util;
 
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.*;
@@ -32,10 +33,20 @@ public class SaboteurStrategy implements Strategy{
                         && b.getParameters().get(4).equals("normal")) {
                     String blocation = b.getParameters().get(2) ;
                     String mylocation = agent.getLocation();
-                    /* On the same vertex (fix later use range)*/
+                    /* On same vertex*/
                     if(mylocation.equals(blocation)){
                         System.out.println("Attacking opponent on same node as me - "+blocation+","+mylocation);
                         return MarsUtil.attackAction(b.getParameters().get(1));
+                    }
+                    /* neighbor vertex */
+                    else {
+                    	Util u = new Util(agent);
+                    	for (String vert : u.getNeighborVertexes(mylocation)){
+                    		if (blocation.equals(vert)){
+                    			System.out.println("Attacking opponent on neighboring node - "+blocation+","+mylocation);
+                                return MarsUtil.attackAction(b.getParameters().get(1));
+                    		}
+                    	}
                     }
                 }
             }
