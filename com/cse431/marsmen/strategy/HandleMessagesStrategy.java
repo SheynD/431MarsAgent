@@ -71,12 +71,17 @@ public class HandleMessagesStrategy implements Strategy{
             String vertex = belief.getParameters().get(2).toString();
             String team = belief.getParameters().get(3).toString();
             String isDisabled = belief.getParameters().get(4).toString();
-            m.removeBeliefs("visibleEntity", "", vehicleName, "", "", "");
+            m.removeBeliefs("visibleEntity", "", vehicleName);
             m.addBelief(new LogicBelief("visibleEntity", reporterName, vehicleName, vertex, team, isDisabled));
         }
         else if (belief.getPredicate().equals("enemySaboteur")){
         	String vehicleName = belief.getParameters().get(0).toString();
         	m.addBelief(new LogicBelief("enemySaboteur", vehicleName));
+        }
+        else if (belief.getPredicate().equals("vertexTeam")){
+        	String node = belief.getParameters().get(0).toString();
+        	String team = belief.getParameters().get(1).toString();
+        	m.addBelief(new LogicBelief("vertexTeam",node,team));
         }
         else if (belief.getPredicate().equals("inZone")){
         	String location = belief.getParameters().get(0).toString();

@@ -99,10 +99,11 @@ public class HandlePerceptStrategy implements Strategy{
                 String value = Integer.toString((Integer)p.getParameters().get(1).accept(paramTrans,""));
                 LogicBelief prob = new LogicBelief("probedVertex", vertex);
                 LogicBelief vert = new LogicBelief("vertex", vertex, value);
+                agent.removeBeliefs("vertex",vertex,"0");
                 agent.addBelief(prob);
                 agent.broadcastBelief(prob);
-                agent.removeBeliefs("vertex",vertex,"0");
                 agent.addBelief(vert);
+                agent.broadcastBelief(vert);
                 break;
             case "ranking": // Don't need
                 break;  
@@ -198,8 +199,11 @@ public class HandlePerceptStrategy implements Strategy{
                 String vertex_name = (String)p.getParameters().get(0).accept(paramTrans,"");
                 String team_occupied = (String)p.getParameters().get(1).accept(paramTrans,"");
                 LogicBelief visV = new LogicBelief("vertex", vertex_name,"0");
+                LogicBelief team_ = new LogicBelief("vertexTeam", vertex_name,team_occupied);
                 agent.addBelief(visV);
                 agent.broadcastBelief(visV);
+                agent.addBelief(team_);
+                agent.broadcastBelief(team_);
                 break;
             case "zoneScore":
                 agent.removeBeliefs("zoneScore");
@@ -218,8 +222,9 @@ public class HandlePerceptStrategy implements Strategy{
     private void handlePercepts(MarsAgent m){
         Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
-        m.removeBeliefs("visibleEntity", m.getName());
+        m.removeBeliefs("visibleEntity");
         m.removeBeliefs("inZone");
+        m.removeBeliefs("vertexTeam");
 
         /* Process each percept */
         for ( Percept p : percepts ) {
