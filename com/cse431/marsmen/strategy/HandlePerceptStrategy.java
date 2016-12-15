@@ -219,7 +219,7 @@ public class HandlePerceptStrategy implements Strategy{
         Collection<Percept> percepts = m.retrieveAllPercepts();
         /* Remove 'visible' entities because they may change step to step? */
         m.removeBeliefs("visibleEntity", m.getName());
-        m.removeBeliefs("inZone", m.getName());
+        m.removeBeliefs("inZone");
 
         /* Process each percept */
         for ( Percept p : percepts ) {

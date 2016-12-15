@@ -23,6 +23,8 @@ public class Util {
         updateVertices();
     }
 
+    /* Largest Area?? */
+
     /* Get an ArrayList of nodes to traverse (the path) */
     public ArrayList<String> getDirection(String start, ArrayList<String> goal) {
         System.out.println("Running Dijkstra");
