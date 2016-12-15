@@ -9,7 +9,7 @@ public class RechargeStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
     	/* Recharge if my energy is below this threshold */
-        if ((double)agent.getEnergy()/(double)agent.getMaxEnergy() < 0.35){
+        if (agent.getEnergy() < 6){
             System.out.println("Recharging..."+(double)agent.getEnergy()/(double)agent.getMaxEnergy() );
             return MarsUtil.rechargeAction();
         }
