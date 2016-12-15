@@ -23,14 +23,10 @@ public class BuyStrategy implements Strategy{
         String lastActionResult = agent.getAllBeliefs("lastActionResult").getFirst().getParameters().get(0);
         int money = Integer.parseInt(agent.getAllBeliefs("money").getFirst().getParameters().get(0));
         if((lastActionResult.equals("failed_in_range") || lastActionResult.equals("failed_out_of_range")) && money>10){
-            /* Only buy one upgrade (save $) */
-            if(!agent.getAllBeliefs("boughtSensor").isEmpty())
-                return null;
-            System.err.println("Buying sensor... "+
-                    agent.getAllBeliefs("lastAction").getFirst().getParameters().get(0)
-                    +" Role: " + agent.getRole() + " money: " + agent.getAllBeliefs("money").getFirst().getParameters().get(0));
-            agent.addBelief(new LogicBelief("boughtSensor"));
-            return MarsUtil.buyAction("sensor");
+            /* Only buy until visRange==3 */
+            if(!agent.getAllBeliefs("visRange").getFirst().getParameters().get(0).equals("3")){
+                return MarsUtil.buyAction("sensor");
+            }
         }
         return null;
     }

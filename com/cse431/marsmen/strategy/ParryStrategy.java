@@ -39,7 +39,7 @@ public class ParryStrategy implements Strategy{
                             String saboteurName = en.getParameters().get(0);
                             if (saboteurName.equals(enemyName)){
                                 /* Half of the time, parry */
-                                if(agent.rand.nextDouble() > 0.5){
+                                if(agent.rand.nextDouble() > 0.25){
                                     System.out.println("Parrying ");
                                     return MarsUtil.parryAction();
                                 }
