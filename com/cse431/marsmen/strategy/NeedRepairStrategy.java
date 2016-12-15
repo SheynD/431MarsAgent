@@ -10,12 +10,6 @@ import com.cse431.marsmen.MarsAgent;
 public class NeedRepairStrategy implements Strategy{
 
     public Action execute(MarsAgent agent) {
-        /* We must know our health and location */
-        if (agent.getAllBeliefs("health").getFirst().getParameters().get(0).isEmpty() ||
-                agent.getAllBeliefs("position", "", agent.getName()).getFirst().getParameters().get(0).isEmpty()){
-            return null;
-        }
-
         /* If I am disabled, lets broadcast that I need a repair */
         if (agent.getHealth() == 0){
             System.out.println("Broadcasting needRepair: "+agent.getLocation()+","+agent.getName());
