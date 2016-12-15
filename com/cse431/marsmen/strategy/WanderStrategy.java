@@ -10,44 +10,60 @@ import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;
 import massim.javaagents.agents.MarsUtil;
 
-public class WanderStrategy implements Strategy{
+public class WanderStrategy implements Strategy {
 
-     /* Wander, but with a favoring for nodes of higher value
-     */
-    public Action execute (MarsAgent agent) {
-        /* If I am low on energy can't explore */
-        if (agent.getEnergy() ==0 ) {
-            System.out.println("Not wandering... "+agent.getEnergy());
-            return null;
-        }
+	/*
+	 * Wander, but with a favoring for nodes of higher value
+	 */
+	public Action execute(MarsAgent agent) {
+		/* If I am low on energy can't explore */
+		if (agent.getEnergy() == 0) {
+			System.out.println("Not wandering... " + agent.getEnergy());
+			return null;
+		}
 
-        /* All neighbor vertices to my vertex */
-        Util u = new Util(agent);
-        ArrayList<String> verticies = u.getNeighborVertexes(agent.getLocation());
+		/* All neighbor vertices to my vertex */
+		Util u = new Util(agent);
+		ArrayList<String> verticies = u.getNeighborVertexes(agent.getLocation());
+		Collections.shuffle(verticies);
+		/* If any of these have higher value and are not dominited by us... */
+		int maxVal = 0;
+		String bestV = agent.getLocation();
+		String randomV = agent.getLocation();
+		for (String v : verticies) {
+			if (v.equals(agent.getLocation()))
+				continue;
+			String thisVstr = agent.getAllBeliefs("vertex", v).getFirst().getParameters().get(1);
+			int thisV = Integer.parseInt(thisVstr);
+			/* Make sure we have enough energy */
+			for (LogicBelief edge : agent.getAllBeliefs("edge")) {
+				if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1)))
+						|| (v.equals(edge.getParameters().get(1))
+								&& agent.getLocation().equals(edge.getParameters().get(0)))) {
+					if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))) {
+						randomV = v;
+					}
+				}
+			}
+			if (thisV > maxVal)
+				bestV = v;
+		}
+		boolean found = false;
+		for (LogicBelief teammate : agent.getAllBeliefs("visibleEntity", "", "", "", agent.getTeam())) {
+			if (teammate.getParameters().get(2).equals(bestV)) {
+				found = true;
+				break;
+			}
+		}
+		if (!bestV.equals(agent.getLocation()) && !found) {
 
-        /* If any of these have higher value and are not dominited by us... */
-        int maxVal = 0;
-        String bestV = agent.getLocation();
-        for (String v : verticies){
-            if(v.equals(agent.getLocation()))
-                continue;
-            String thisVstr = agent.getAllBeliefs("vertex",v).getFirst().getParameters().get(1);
-            int thisV = Integer.parseInt(thisVstr);
-            /* Make sure we have enough energy */
-            for (LogicBelief edge : agent.getAllBeliefs("edge")){
-                if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){					
-                    if (agent.getEnergy() < Integer.parseInt(edge.getParameters().get(2))){
-                        continue;
-                    }
-                }
-            }
-            if(thisV>maxVal)
-                bestV = v;
-        }
-        if(!bestV.equals(agent.getLocation())){
-            System.out.println("Wandering to better node... "+bestV);
-            return MarsUtil.gotoAction(bestV);
-        }
-        return null;
-    }
+			System.out.println("Wandering to better node... " + bestV);
+			return MarsUtil.gotoAction(bestV);
+		} else if (!randomV.equals(agent.getLocation())) {
+			System.out.println("Wandering to random node... " + randomV);
+			return MarsUtil.gotoAction(randomV);
+		}
+
+		return null;
+	}
 }

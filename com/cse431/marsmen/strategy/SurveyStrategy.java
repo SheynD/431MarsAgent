@@ -28,7 +28,7 @@ public class SurveyStrategy implements Strategy{
 		/* If we know no edges around us, survey 
 		 * I am not sure if one survey is guaranteed to get all edges around my location or not.
 		 * Survey is a ranged action, so there is some randomness, depending on the agents range, right?*/
-    	if (edges.isEmpty()){
+    	if (edges.size()<2){
     		return MarsUtil.surveyAction();
     	}
     	return null;
