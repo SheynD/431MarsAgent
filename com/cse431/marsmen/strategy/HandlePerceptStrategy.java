@@ -95,9 +95,14 @@ public class HandlePerceptStrategy implements Strategy{
                 agent.broadcastBelief(posi);
                 break;
             case "probedVertex":
-                LogicBelief prob = new LogicBelief("probedVertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                String vertex = (String)p.getParameters().get(0).accept(paramTrans,"");
+                String value = Integer.toString((Integer)p.getParameters().get(1).accept(paramTrans,""));
+                LogicBelief prob = new LogicBelief("probedVertex", vertex);
+                LogicBelief vert = new LogicBelief("vertex", vertex, value);
                 agent.addBelief(prob);
                 agent.broadcastBelief(prob);
+                agent.removeBeliefs("vertex",vertex,"0");
+                agent.addBelief(vert);
                 break;
             case "ranking": // Don't need
                 break;  
@@ -163,7 +168,7 @@ public class HandlePerceptStrategy implements Strategy{
                 break;
             case "visibleEntity":
                 String vehicle_name = (String)perceptParams.get(0).accept(paramTrans,"");
-                String vertex = (String)perceptParams.get(1).accept(paramTrans,"");
+                String vertex_ = (String)perceptParams.get(1).accept(paramTrans,"");
                 String team = (String)perceptParams.get(2).accept(paramTrans,"");
                 String disabled = (String)perceptParams.get(3).accept(paramTrans,"");
                 /* Store enemy team, unnecessary? */
@@ -173,7 +178,7 @@ public class HandlePerceptStrategy implements Strategy{
                     agent.broadcastBelief(belief_enemey_team);
                 }
                 /* Save visible entity to belief */
-                LogicBelief ve = new LogicBelief("visibleEntity", agent.getName(),vehicle_name,vertex,team,disabled);
+                LogicBelief ve = new LogicBelief("visibleEntity", agent.getName(),vehicle_name,vertex_,team,disabled);
                 agent.addBelief(ve);
                 break;
             case "inspectedEntity":
@@ -190,7 +195,9 @@ public class HandlePerceptStrategy implements Strategy{
             	}
             	
             case "visibleVertex":
-                LogicBelief visV = new LogicBelief("vertex", (String)p.getParameters().get(0).accept(paramTrans,""));
+                String vertex_name = (String)p.getParameters().get(0).accept(paramTrans,"");
+                String team_occupied = (String)p.getParameters().get(1).accept(paramTrans,"");
+                LogicBelief visV = new LogicBelief("vertex", vertex_name,"0");
                 agent.addBelief(visV);
                 agent.broadcastBelief(visV);
                 break;

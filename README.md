@@ -71,6 +71,12 @@ Percept info not stored
 // timestamp
 // lastActionParams
 
+Vertex
+vertex(name,value,team_occupied)
+
+Probed Vertex
+probedVertex(name)
+
 Total number of edges:  
 numEdges (number)  
 
@@ -133,7 +139,7 @@ zonesScore (score)
 
 ### OLD BELIEFS --------------------------------------------------------
 
-visibleAgent  
+visibleEntity  
 1. name of agent that reported it  
 2. vehicle name  
 3. vertex  
@@ -149,6 +155,7 @@ health
 maxHealth
 
 probedVertex
+1. vertex
 
 position
 

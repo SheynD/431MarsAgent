@@ -5,6 +5,7 @@ import massim.javaagents.Agent;
 //import massim.javaagents.agents.MarsUtil;
 import apltk.interpreter.data.LogicBelief;
 import apltk.interpreter.data.Message;
+import java.util.Random;
 
 //import apltk.interpreter.data.LogicGoal;
 import com.cse431.marsmen.strategy.*;
@@ -15,10 +16,13 @@ public class MarsAgent extends Agent {
     /* Member variables */
     
     private ArrayList<Strategy> strategies;
+    public Random rand;
 
     /* Constructor */
     public MarsAgent(String name, String team) {
         super(name, team);
+
+        rand = new Random(1);
         
         // Set subsumption hierarchy
         strategies = new ArrayList<Strategy>();

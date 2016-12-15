@@ -12,8 +12,7 @@ import massim.javaagents.agents.MarsUtil;
 
 public class WanderStrategy implements Strategy{
 
-    /* Note that as of now, this Strategy never fails, so any strategy below it
-     * does not get executed. Maybe we should add some randomness (ie, fail 1/2 the time)?
+     /* Wander, but with a favoring for nodes of higher value
      */
     public Action execute (MarsAgent agent) {
         /* If I am low on energy can't explore */
@@ -21,22 +20,34 @@ public class WanderStrategy implements Strategy{
             System.out.println("Not wandering... "+agent.getEnergy());
             return null;
         }
-        Util u = new Util(agent);
+
         /* All neighbor vertices to my vertex */
-        ArrayList <String> verticies = u.getNeighborVertexes(agent.getLocation());
-        /* Choose a random one to go to */
-		Collections.shuffle(verticies);
-		for (String v : verticies){
-			for (LogicBelief edge : agent.getAllBeliefs("edge")){
-				if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){					
-					if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
-						return MarsUtil.gotoAction(v);
-					}
-				}
-			}
-		}
-		return null;
-		
-        
+        Util u = new Util(agent);
+        ArrayList<String> verticies = u.getNeighborVertexes(agent.getLocation());
+
+        /* If any of these have higher value and are not dominited by us... */
+        int maxVal = 0;
+        String bestV = agent.getLocation();
+        for (String v : verticies){
+            if(v.equals(agent.getLocation()))
+                continue;
+            String thisVstr = agent.getAllBeliefs("vertex",v).getFirst().getParameters().get(1);
+            int thisV = Integer.parseInt(thisVstr);
+            /* Make sure we have enough energy */
+            for (LogicBelief edge : agent.getAllBeliefs("edge")){
+                if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){					
+                    if (agent.getEnergy() < Integer.parseInt(edge.getParameters().get(2))){
+                        continue;
+                    }
+                }
+            }
+            if(thisV>maxVal)
+                bestV = v;
+        }
+        if(!bestV.equals(agent.getLocation())){
+            System.out.println("Wandering to better node... "+bestV);
+            return MarsUtil.gotoAction(bestV);
+        }
+        return null;
     }
 }

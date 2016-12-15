@@ -46,13 +46,15 @@ public class HandleMessagesStrategy implements Strategy{
             //m.removeBeliefs("edge", node1, node2);
             m.addBelief(new LogicBelief("edge", node1, node2, weight));
         }
+        else if (belief.getPredicate().equals("probedVertex")) {
+            String vertex = belief.getParameters().get(0).toString();
+            m.addBelief(new LogicBelief("probedVertex", vertex));
+        }
         else if (belief.getPredicate().equals("vertex")) {
             String node = belief.getParameters().get(0).toString();
-            //String value = belief.getParameters().get(1).toString();
-            // System.err.println("ADD NODE " + node + "__" + value);
-            //m.removeBeliefs("node", node, "");
-            //m.addBelief(new LogicBelief("node", node, value));
-            m.addBelief(new LogicBelief("vertex", node));
+            String value = belief.getParameters().get(1).toString();
+            m.removeBeliefs("vertex",node,"0");
+            m.addBelief(new LogicBelief("vertex", node, value));
         }
         else if (belief.getPredicate().equals("position")) {
             // Position (node, agentName, role)
@@ -62,15 +64,15 @@ public class HandleMessagesStrategy implements Strategy{
             m.removeBeliefs("position", "", agentName, "");
             m.addBelief(new LogicBelief("position", node, agentName, role));
         }
-        else if (belief.getPredicate().equals("visibleAgent")) {
+        else if (belief.getPredicate().equals("visibleEntity")) {
             // VisibleAgent (reporterName, vehicleName, vertex, team, isDisabled)
             String reporterName = belief.getParameters().get(0).toString();
             String vehicleName = belief.getParameters().get(1).toString();
             String vertex = belief.getParameters().get(2).toString();
             String team = belief.getParameters().get(3).toString();
             String isDisabled = belief.getParameters().get(4).toString();
-            m.removeBeliefs("visibleAgent", "", vehicleName, "", "", "");
-            m.addBelief(new LogicBelief("visibleAgent", reporterName, vehicleName, vertex, team, isDisabled));
+            m.removeBeliefs("visibleEntity", "", vehicleName, "", "", "");
+            m.addBelief(new LogicBelief("visibleEntity", reporterName, vehicleName, vertex, team, isDisabled));
         }
         else if (belief.getPredicate().equals("enemySaboteur")){
         	String vehicleName = belief.getParameters().get(0).toString();

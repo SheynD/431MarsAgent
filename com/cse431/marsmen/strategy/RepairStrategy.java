@@ -27,6 +27,21 @@ public class RepairStrategy implements Strategy {
 
         ArrayList<String> goals = new ArrayList<String>();
         Util u = new Util(agent);
+        ArrayList<String> near = u.getNeighborVertexes(agent.getLocation());
+        /* If I am on or next to any agent that needs a repair, repair it */
+        for(LogicBelief teammate : agent.getAllBeliefs("visibleEntity","","","",agent.getTeam(),"disabled")){
+            String vehicleName = teammate.getParameters().get(1);
+            String vertex = teammate.getParameters().get(2);
+            System.out.println("Someone needs a repair!: "+vehicleName+" at "+vertex);
+            if(near.contains(vertex) && !agent.getName().equals(vehicleName)){
+                System.out.println("Repairing neighbor!: "+vehicleName+" at "+vertex);
+                agent.broadcastBelief(new LogicBelief("removeRepair",vertex,vehicleName,""));
+                return MarsUtil.repairAction(vehicleName);
+            }
+        }
+
+
+
         /* For every repair coming message */
         if (!agent.getAllBeliefs("repairComing").isEmpty()){
             /* For every repair that is incoming */

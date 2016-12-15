@@ -22,6 +22,7 @@ public class ExploreStrategy implements Strategy{
         }
         /* If I am on a probed vertex */
         if (agent.containsBelief(new LogicBelief("probedVertex", agent.getLocation()))){
+            System.out.println("I am on a probed vertex");
             /* Go to a different vertex */
             Util u = new Util(agent);
             ArrayList <LogicBelief> edges = new ArrayList<>();
@@ -30,8 +31,7 @@ public class ExploreStrategy implements Strategy{
                 String vertex2 = l.getParameters().get(1);
                 String weight = l.getParameters().get(2);
                 /* If it is an edge we are next to, and its weigth is not unknown (11) */
-                if ((vertex1.equals(agent.getLocation()) || vertex2.equals(agent.getLocation())) 
-                        && !weight.equals("11")){
+                if ((vertex1.equals(agent.getLocation()) || vertex2.equals(agent.getLocation())) && !weight.equals("11")){
                     edges.add(l);
                 }
             }
@@ -48,14 +48,14 @@ public class ExploreStrategy implements Strategy{
                         continue;
                     }
                     else {
-                    	for (LogicBelief edge : agent.getAllBeliefs("edge")){
-            				if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){
-            					if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
-            						System.out.println("Going to vertex "+v+" to go to an unprobed vertex");
-            						return MarsUtil.gotoAction(v);
-            					}
-            				}
-            			}
+                        for (LogicBelief edge : agent.getAllBeliefs("edge")){
+                            if ((v.equals(edge.getParameters().get(0)) && agent.getLocation().equals(edge.getParameters().get(1))) || (v.equals(edge.getParameters().get(1)) && agent.getLocation().equals(edge.getParameters().get(0)))){
+                                if (agent.getEnergy() >= Integer.parseInt(edge.getParameters().get(2))){
+                                    System.out.println("Going to vertex "+v+" to go to an unprobed vertex");
+                                    return MarsUtil.gotoAction(v);
+                                }
+                            }
+                        }
                     }
                 }
                 return null;

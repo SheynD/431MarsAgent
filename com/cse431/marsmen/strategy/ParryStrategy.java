@@ -2,7 +2,7 @@ package com.cse431.marsmen.strategy;
 
 import com.cse431.marsmen.MarsAgent;
 import com.cse431.marsmen.Util;
-
+import java.util.ArrayList;
 import apltk.interpreter.data.LogicBelief;
 import eis.iilang.*;
 import massim.javaagents.agents.MarsUtil;
@@ -31,16 +31,18 @@ public class ParryStrategy implements Strategy{
                 String disabled = b.getParameters().get(4);
                 String location = b.getParameters().get(2);
                 Util u = new Util(agent);
-                //TODO add current node to list of neighbor
+                ArrayList<String> near = u.getNeighborVertexes(agent.getLocation());
                 /* Different team and not disabled */
-                if (!team.equals(agent.getTeam()) 
-                        && disabled.equals("normal") && u.getNeighborVertexes(agent.getLocation()).contains(location)) {
+                if (!team.equals(agent.getTeam()) && disabled.equals("normal") && near.contains(location)) {
                     if (!agent.getAllBeliefs("enemySaboteur").isEmpty()){
                         for (LogicBelief en : agent.getAllBeliefs("enemySaboteur")){
                             String saboteurName = en.getParameters().get(0);
                             if (saboteurName.equals(enemyName)){
-                                System.out.println("Parrying ");
-                                return MarsUtil.parryAction();
+                                /* Half of the time, parry */
+                                if(agent.rand.nextDouble() > 0.5){
+                                    System.out.println("Parrying ");
+                                    return MarsUtil.parryAction();
+                                }
                             }
                         }
                     }

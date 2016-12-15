@@ -101,6 +101,7 @@ public class Util {
     public ArrayList<String> getNeighborVertexes(String start) {
         ArrayList<String> vertexes = new ArrayList<String>();
         String position = start;
+        vertexes.add(position);/* Include self as neighbor, for convenince sake... */
         for (LogicBelief p : agent.getAllBeliefs("edge")) {
             String vertex1 = p.getParameters().get(0);
             String vertex2 = p.getParameters().get(1);
