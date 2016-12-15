@@ -3,6 +3,7 @@ package com.cse431.marsmen.strategy;
 import com.cse431.marsmen.MarsAgent;
 import massim.javaagents.agents.MarsUtil;
 
+import apltk.interpreter.data.LogicBelief;
 import eis.iilang.Action;
 
 public class BuyStrategy implements Strategy{
@@ -21,11 +22,14 @@ public class BuyStrategy implements Strategy{
         /* If last action failed for these reasons and we have enough money, increase sensor */
         String lastActionResult = agent.getAllBeliefs("lastActionResult").getFirst().getParameters().get(0);
         int money = Integer.parseInt(agent.getAllBeliefs("money").getFirst().getParameters().get(0));
-        if((lastActionResult.equals("failed_in_range") || lastActionResult.equals("failed_out_of_range")) && 
-                money>10){
+        if((lastActionResult.equals("failed_in_range") || lastActionResult.equals("failed_out_of_range")) && money>10){
+            /* Only buy one upgrade (save $) */
+            if(!agent.getAllBeliefs("boughtSensor").isEmpty())
+                return null;
             System.err.println("Buying sensor... "+
                     agent.getAllBeliefs("lastAction").getFirst().getParameters().get(0)
                     +" Role: " + agent.getRole() + " money: " + agent.getAllBeliefs("money").getFirst().getParameters().get(0));
+            agent.addBelief(new LogicBelief("boughtSensor"));
             return MarsUtil.buyAction("sensor");
         }
         return null;

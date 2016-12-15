@@ -139,11 +139,10 @@ public class HandlePerceptStrategy implements Strategy{
                 String vertex1 = (String)p.getParameters().get(0).accept(paramTrans,"");
                 String vertex2 = (String)p.getParameters().get(1).accept(paramTrans,"");
                 String weight = Integer.toString((Integer)p.getParameters().get(2).accept(paramTrans,""));
+                agent.removeBeliefs("edge",vertex1,vertex2);
                 LogicBelief surv = new LogicBelief("edge", vertex1, vertex2, weight);
-                if (!agent.containsBelief(surv)){
-                	agent.addBelief(surv);
-                	agent.broadcastBelief(surv);
-                }
+                agent.addBelief(surv);
+                agent.broadcastBelief(surv);
                 break;
             case "timestamp": // Don't need
                 break;
@@ -161,9 +160,10 @@ public class HandlePerceptStrategy implements Strategy{
                 vertex1 = (String)p.getParameters().get(0).accept(paramTrans,"");
                 vertex2 = (String)p.getParameters().get(1).accept(paramTrans,"");
                 LogicBelief vis = new LogicBelief("edge", vertex1, vertex2, "11");
-                if (!agent.containsBelief(vis)){
-                	agent.addBelief(vis);
-                	agent.broadcastBelief(vis);
+                /* If first time we saw this edge */
+                if (agent.getAllBeliefs("edge",vertex1,vertex2).isEmpty()){
+                    agent.addBelief(vis);
+                    agent.broadcastBelief(vis);
                 }
                 break;
             case "visibleEntity":

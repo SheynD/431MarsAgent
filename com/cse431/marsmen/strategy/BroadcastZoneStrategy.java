@@ -9,6 +9,8 @@ import eis.iilang.Action;
 public class BroadcastZoneStrategy implements Strategy{
     @Override
     public Action execute (MarsAgent agent) {
+        if(agent.getAllBeliefs("zoneScore").isEmpty())
+            return null;
     	/* If not in a zone, don't broadcast anything */
         String zoneScore = agent.getAllBeliefs("zoneScore").getFirst().getParameters().get(0);
         if(zoneScore.equals("0"))
